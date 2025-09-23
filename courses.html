@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses | Gramik Digital Pathshala</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --background-color: #f0f2f5;
+            --card-bg-color: #ffffff;
+            --text-color: #343a40;
+            --heading-color: #212529;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .header {
+            background-color: var(--card-bg-color);
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.7rem;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        .nav-links a.cta-button {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        }
+        .nav-links a.cta-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+        }
+        #language-selector {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid var(--secondary-color);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+        .section {
+            padding: 6rem 0;
+            background-color: var(--background-color);
+        }
+        .section:nth-of-type(even) {
+            background-color: var(--card-bg-color);
+        }
+        .section-title {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            color: var(--heading-color);
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 5px;
+            background-color: var(--primary-color);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        .class-section {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .class-section:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+        .class-section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        .course-card {
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        .course-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .course-card-content {
+            padding: 1.8rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .course-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
+            color: var(--heading-color);
+            line-height: 1.3;
+        }
+        .course-card p {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .course-card .course-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .course-card .course-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .footer {
+            background-color: var(--heading-color);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 6rem;
+            font-size: 0.95rem;
+        }
+        .footer .social-links {
+            margin-top: 1.5rem;
+            font-size: 0;
+        }
+        .footer .social-links a {
+            color: #fff;
+            margin: 0 0.8rem;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .footer .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .class-section-title {
+                font-size: 1.8rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .section {
+                padding: 4rem 0;
+            }
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 3rem;
+            }
+            .class-section-title {
+                font-size: 1.5rem;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            .course-card img {
+                height: 180px;
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            .class-section-title {
+                font-size: 1.3rem;
+            }
+            .course-card h3 {
+                font-size: 1.3rem;
+            }
+            .footer .social-links a {
+                font-size: 1.5rem;
+                margin: 0 0.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo"><i class="fas fa-graduation-cap"></i> <span data-i18n="website_title">Gramik Digital Pathshala</span></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="courses.html" data-i18n="nav_courses">Courses</a></li>
+                    <li><a href="index.html#ai-mentor" data-i18n="nav_mentor">Mentor</a></li>
+                    <li><a href="index.html#about" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="#" class="cta-button" data-i18n="nav_join">Join Now</a></li>
+                </ul>
+            </nav>
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="pa">Punjabi</option>
+            </select>
+        </div>
+    </header>
+    <main>
+        <section id="courses" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="courses_title">Our Courses</h2>
+                <div class="class-section">
+                    <h3 class="class-section-title" data-i18n="class_1_5_title">Class 1-5: The Foundation of Knowledge</h3>
+                    <div class="grid">
+                        <div class="course-card">
+                            <img src="https://img.freepik.com/free-photo/books-with-brain-digital-art-style-education-day_23-2151164351.jpg" alt="Basic Concepts">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_1_title">Basic Knowledge</h3>
+                                <p data-i18n="course_1_desc">Learn about letters, numbers, and the world around us.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <img src="https://i.pinimg.com/736x/32/fc/18/32fc18853b8958ccbe5eb3f4235602fd.jpg" alt="Elementary Math">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_2_title">Elementary Mathematics</h3>
+                                <p data-i18n="course_2_desc">Fun classes on counting, addition, subtraction, and shapes.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <img src="https://img.lovepik.com/photo/40006/0067.jpg_wh860.jpg" alt="Creative Learning">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_3_title">Creative Learning</h3>
+                                <p data-i18n="course_3_desc">Learn through games and expand your thinking.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-section">
+                    <h3 class="class-section-title" data-i18n="class_6_8_title">Class 6-8: Developing the Foundation</h3>
+                    <div class="grid">
+                        <div class="course-card">
+                            <img src="https://img.freepik.com/premium-photo/science-background-illustration-scientific-design-flasks-glass-chemistry-physics-elements_839051-3762.jpg" alt="Science">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_4_title">Science Comprehension</h3>
+                                <p data-i18n="course_4_desc">Understand the fundamental principles of Physics, Chemistry, and Biology.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <img src="https://scontent.fdel65-2.fna.fbcdn.net/v/t39.30808-6/481831488_1217831063681105_8868746085147403353_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=9IOTRJko9BcQ7kNvwHHhz-O&_nc_oc=AdlCqHDBd2bMFso_i0402ohIGzT93ggjzo3nP7MEnaf72kIUoY96NEtgP4CDHGDCbQeKlQZXmlpMQumA3aMjJXrK&_nc_zt=23&_nc_ht=scontent.fdel65-2.fna&_nc_gid=eNLTaEBGemKoQ3dH4Aivvw&oh=00_AfZ38Y0ZtlmB-j771xlW1FMUVNyKQdrv00Fx2MyeOp3Mhg&oe=68D71335" alt="Mathematics">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_5_title">Higher Mathematics</h3>
+                                <p data-i18n="course_5_desc">Master Algebra, Geometry, and Data Analysis.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <img src="https://t3.ftcdn.net/jpg/03/89/02/86/360_F_389028692_7k7EhT92ayztOxtD6cN9maEZdTaQkski.jpg" alt="Social Studies">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_6_title">Social Sciences</h3>
+                                <p data-i18n="course_6_desc">A deep understanding of History, Geography, and Civics.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-section">
+                    <h3 class="class-section-title" data-i18n="class_9_12_title">Class 9-12: The Path to the Future</h3>
+                    <div class="grid">
+                        <div class="course-card">
+                            <img src="https://cdn.vectorstock.com/i/500p/15/11/science-icon-set-education-stem-vector-941511.jpg" alt="Advanced Science">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_7_title">Science (JEE/NEET)</h3>
+                                <p data-i18n="course_7_desc">Preparation for competitive exams in Physics, Chemistry, and Biology.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <img src="https://i.pinimg.com/736x/6c/2d/40/6c2d40e51b303afa827ba31f73b48223.jpg" alt="Advanced Mathematics">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_8_title">Mathematics (IIT-JEE)</h3>
+                                <p data-i18n="course_8_desc">Proficiency in Calculus, Vector Algebra, and Advanced Geometry.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7ThLvHxTi93TqLrwvX5MQ0r3E0zMAOnkTj5Vup0KFjchRdlKJ8rmPheXL6XDQGRlr9_iN6OGc-FEkvkQxZOEXJ6hAH9M08q6xA7Z-nC2q_qciUWC088Hnor9nkSarwoNwn7kNpExBd6w/s1600/comm-768x576.jpg" alt="Commerce">
+                            <div class="course-card-content">
+                                <h3 data-i18n="course_9_title">Commerce Studies</h3>
+                                <p data-i18n="course_9_desc">Practical knowledge of Accountancy, Business Studies, and Economics.</p>
+                                <a href="#" class="course-link" data-i18n="view_details">View Details <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p data-i18n="footer_text">&copy; 2025 Gramik Digital Pathshala. All Rights Reserved. Designed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for Future Leaders.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const translations = {
+            en: {
+                website_title: "Gramik Digital Pathshala",
+                nav_home: "Home",
+                nav_courses: "Courses",
+                nav_mentor: "Mentor",
+                nav_about: "About Us",
+                nav_join: "Join Now",
+                courses_title: "Our Courses",
+                class_1_5_title: "Class 1-5: The Foundation of Knowledge",
+                course_1_title: "Basic Knowledge",
+                course_1_desc: "Learn about letters, numbers, and the world around us.",
+                course_2_title: "Elementary Mathematics",
+                course_2_desc: "Fun classes on counting, addition, subtraction, and shapes.",
+                course_3_title: "Creative Learning",
+                course_3_desc: "Learn through games and expand your thinking.",
+                class_6_8_title: "Class 6-8: Developing the Foundation",
+                course_4_title: "Science Comprehension",
+                course_4_desc: "Understand the fundamental principles of Physics, Chemistry, and Biology.",
+                course_5_title: "Higher Mathematics",
+                course_5_desc: "Master Algebra, Geometry, and Data Analysis.",
+                course_6_title: "Social Sciences",
+                course_6_desc: "A deep understanding of History, Geography, and Civics.",
+                class_9_12_title: "Class 9-12: The Path to the Future",
+                course_7_title: "Science (JEE/NEET)",
+                course_7_desc: "Preparation for competitive exams in Physics, Chemistry, and Biology.",
+                course_8_title: "Mathematics (IIT-JEE)",
+                course_8_desc: "Proficiency in Calculus, Vector Algebra, and Advanced Geometry.",
+                course_9_title: "Commerce Studies",
+                course_9_desc: "Practical knowledge of Accountancy, Business Studies, and Economics.",
+                view_details: "View Details",
+                footer_text: "© 2025 Gramik Digital Pathshala. All Rights Reserved. Designed with ❤️ for Future Leaders."
+            },
+            hi: {
+                website_title: "ग्रामिक डिजिटल पाठशाला",
+                nav_home: "होम",
+                nav_courses: "कोर्स",
+                nav_mentor: "मेंटर",
+                nav_about: "हमारे बारे में",
+                nav_join: "अभी जुड़ें",
+                courses_title: "हमारे कोर्स",
+                class_1_5_title: "कक्षा 1-5: ज्ञान की नींव",
+                course_1_title: "बुनियादी ज्ञान",
+                course_1_desc: "अक्षर ज्ञान, संख्या ज्ञान, और आस-पास की दुनिया को समझें।",
+                course_2_title: "प्रारंभिक गणित",
+                course_2_desc: "गिनती, जोड़, घटाओ, और आकार (shapes) की मजेदार क्लास।",
+                course_3_title: "रचनात्मक शिक्षण",
+                course_3_desc: "खेल-खेल में सीखें और अपनी सोच को बढ़ाएं।",
+                class_6_8_title: "कक्षा 6-8: आधारशिला का विकास",
+                course_4_title: "विज्ञान बोध",
+                course_4_desc: "फिजिक्स, केमिस्ट्री, बायोलॉजी के मूलभूत सिद्धांतों को समझें।",
+                course_5_title: "उच्च गणित",
+                course_5_desc: "अल्जेब्रा, ज्योमेट्री, और डेटा एनालिसिस में महारत हासिल करें।",
+                course_6_title: "सामाजिक विज्ञान",
+                course_6_desc: "इतिहास, भूगोल और नागरिक शास्त्र की गहरी समझ।",
+                class_9_12_title: "कक्षा 9-12: भविष्य की दिशा",
+                course_7_title: "विज्ञान (जेईई/नीट)",
+                course_7_desc: "प्रतिस्पर्धी परीक्षाओं के लिए फिजिक्स, केमिस्ट्री, और बायोलॉजी की तैयारी।",
+                course_8_title: "गणित (आईआईटी-जेईई)",
+                course_8_desc: "कैलकुलस, वेक्टर अल्जेब्रा और एडवांस्ड ज्योमेट्री में महारत।",
+                course_9_title: "वाणिज्य अध्ययन",
+                course_9_desc: "अकाउंटेंसी, बिजनेस स्टडीज और इकोनॉमिक्स के व्यावहारिक ज्ञान।",
+                view_details: "विवरण देखें",
+                footer_text: "© 2025 ग्रामिक डिजिटल पाठशाला। सर्वाधिकार सुरक्षित। भविष्य के नेताओं के लिए ❤️ के साथ डिज़ाइन किया गया।"
+            },
+            pa: {
+                website_title: "ਗ੍ਰਾਮਿਕ ਡਿਜੀਟਲ ਪਾਠਸ਼ਾਲਾ",
+                nav_home: "ਮੁੱਖ ਪੰਨਾ",
+                nav_courses: "ਕੋਰਸ",
+                nav_mentor: "ਮੈਂਟਰ",
+                nav_about: "ਸਾਡੇ ਬਾਰੇ",
+                nav_join: "ਹੁਣੇ ਸ਼ਾਮਲ ਹੋਵੋ",
+                courses_title: "ਸਾਡੇ ਕੋਰਸ",
+                class_1_5_title: "ਕਲਾਸ 1-5: ਗਿਆਨ ਦੀ ਨੀਂਹ",
+                course_1_title: "ਬੁਨਿਆਦੀ ਗਿਆਨ",
+                course_1_desc: "ਅੱਖਰਾਂ, ਸੰਖਿਆਵਾਂ ਅਤੇ ਸਾਡੇ ਆਲੇ-ਦੁਆਲੇ ਦੀ ਦੁਨੀਆ ਬਾਰੇ ਸਿੱਖੋ।",
+                course_2_title: "ਮੁੱਢਲੀ ਗਣਿਤ",
+                course_2_desc: "ਗਿਣਤੀ, ਜੋੜ, ਘਟਾਓ ਅਤੇ ਆਕਾਰਾਂ ਬਾਰੇ ਮਜ਼ੇਦਾਰ ਕਲਾਸਾਂ।",
+                course_3_title: "ਰਚਨਾਤਮਕ ਸਿੱਖਿਆ",
+                course_3_desc: "ਖੇਡਾਂ ਰਾਹੀਂ ਸਿੱਖੋ ਅਤੇ ਆਪਣੀ ਸੋਚ ਦਾ ਵਿਸਤਾਰ ਕਰੋ।",
+                class_6_8_title: "ਕਲਾਸ 6-8: ਨੀਂਹ ਦਾ ਵਿਕਾਸ",
+                course_4_title: "ਵਿਗਿਆਨ ਦੀ ਸਮਝ",
+                course_4_desc: "ਭੌਤਿਕ ਵਿਗਿਆਨ, ਰਸਾਇਣ ਵਿਗਿਆਨ ਅਤੇ ਜੀਵ ਵਿਗਿਆਨ ਦੇ ਮੂਲ ਸਿਧਾਂਤਾਂ ਨੂੰ ਸਮਝੋ।",
+                course_5_title: "ਉੱਚ ਗਣਿਤ",
+                course_5_desc: "ਅਲਜਬਰਾ, ਜਿਓਮੈਟਰੀ ਅਤੇ ਡਾਟਾ ਵਿਸ਼ਲੇਸ਼ਣ ਵਿੱਚ ਮੁਹਾਰਤ ਹਾਸਲ ਕਰੋ।",
+                course_6_title: "ਸਮਾਜਿਕ ਵਿਗਿਆਨ",
+                course_6_desc: "ਇਤਿਹਾਸ, ਭੂਗੋਲ ਅਤੇ ਨਾਗਰਿਕ ਸ਼ਾਸਤਰ ਦੀ ਡੂੰਘੀ ਸਮਝ।",
+                class_9_12_title: "ਕਲਾਸ 9-12: ਭਵਿੱਖ ਦਾ ਮਾਰਗ",
+                course_7_title: "ਵਿਗਿਆਨ (JEE/NEET)",
+                course_7_desc: "ਭੌਤਿਕ ਵਿਗਿਆਨ, ਰਸਾਇਣ ਵਿਗਿਆਨ ਅਤੇ ਜੀਵ ਵਿਗਿਆਨ ਵਿੱਚ ਪ੍ਰਤੀਯੋਗੀ ਪ੍ਰੀਖਿਆਵਾਂ ਲਈ ਤਿਆਰੀ।",
+                course_8_title: "ਗਣਿਤ (IIT-JEE)",
+                course_8_desc: "ਕੈਲਕੂਲਸ, ਵੈਕਟਰ ਅਲਜਬਰਾ ਅਤੇ ਉੱਨਤ ਜਿਓਮੈਟਰੀ ਵਿੱਚ ਨਿਪੁੰਨਤਾ।",
+                course_9_title: "ਵਣਜ ਅਧਿਐਨ",
+                course_9_desc: "ਅਕਾਊਂਟੈਂਸੀ, ਬਿਜ਼ਨਸ ਸਟੱਡੀਜ਼ ਅਤੇ ਅਰਥ ਸ਼ਾਸਤਰ ਦਾ ਵਿਹਾਰਕ ਗਿਆਨ।",
+                view_details: "ਵੇਰਵੇ ਵੇਖੋ",
+                footer_text: "© 2025 ਗ੍ਰਾਮਿਕ ਡਿਜੀਟਲ ਪਾਠਸ਼ਾਲਾ। ਸਾਰੇ ਅਧਿਕਾਰ ਰਾਖਵੇਂ ਹਨ। ਭਵਿੱਖ ਦੇ ਨੇਤਾਵਾਂ ਲਈ ❤️ ਨਾਲ ਡਿਜ਼ਾਈਨ ਕੀਤਾ ਗਿਆ।"
+            }
+        };
+        const languageSelector = document.getElementById('language-selector');
+        function updateContent(language) {
+            const currentTranslations = translations[language];
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (currentTranslations[key]) {
+                    element.innerHTML = currentTranslations[key];
+                }
+            });
+        }
+        const storedLanguage = localStorage.getItem('language') || 'en';
+        languageSelector.value = storedLanguage;
+        updateContent(storedLanguage);
+        languageSelector.addEventListener('change', (event) => {
+            const newLanguage = event.target.value;
+            localStorage.setItem('language', newLanguage);
+            updateContent(newLanguage);
+        });
+    </script>
+</body>
+</html>
