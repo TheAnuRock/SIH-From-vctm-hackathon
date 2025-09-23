@@ -53,28 +53,75 @@
       animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
     }
 
-    @keyframes bounce {
+    .notification {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+    }
 
-      0%,
-      20%,
-      50%,
-      80%,
+    .notification.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      background-color: #10b981;
+    }
+
+    .notification.error {
+      background-color: #b8c8db;
+    }
+
+    .loading {
+      display: none;
+    }
+
+    .loading.active {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
       100% {
-        transform: translateY(0);
+        transform: rotate(360deg);
       }
+    }
 
-      40% {
-        transform: translateY(-10px);
-      }
-
-      60% {
-        transform: translateY(-5px);
-      }
+    .dark-mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
     }
   </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <!-- Notification Container -->
+  <div id="notification" class="notification"></div>
+
+  <!-- Dark Mode Toggle -->
+  <button id="darkModeToggle" class="dark-mode-toggle bg-primary text-white p-3 rounded-full shadow-lg">
+    <span class="material-symbols-outlined">dark_mode</span>
+  </button>
+
   <div class="flex flex-col min-h-screen">
     <header
       class="bg-background-light dark:bg-background-dark/50 backdrop-blur-sm sticky top-0 z-10 border-b-2 border-accent">
@@ -91,14 +138,14 @@
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white font-display">Gramik Digital Pathshala</h2>
           </div>
           <div class="flex items-center gap-2">
-            <button
-              class="px-5 py-2 text-lg font-bold bg-primary text-white rounded-full hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark animate-bounce-custom">
+           <a href="loginpage.html" ><button id="loginBtn"
+              class="px-5 py-2 text-lg font-bold bg-primary text-white rounded-full hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark">
               Log In
-            </button>
-            <button
+            </button></a>
+           <a href="regitrationpage.html"> <button id="signupBtn"
               class="px-5 py-2 text-lg font-bold bg-accent text-primary dark:bg-primary/30 dark:text-white rounded-full hover:bg-primary/30 dark:hover:bg-primary/40">
               Sign Up
-            </button>
+            </button></a>
           </div>
         </div>
       </div>
@@ -113,56 +160,110 @@
         <div class="bg-white dark:bg-background-dark/70 rounded-2xl shadow-bubbly-lg p-6 sm:p-8">
           <div class="border-b-2 border-accent pb-4 mb-6">
             <nav aria-label="Tabs" class="-mb-px flex space-x-6">
-              <a class="w-1/2 py-4 px-1 text-center font-bold text-lg border-b-4 border-primary text-primary rounded-t-lg"
-                href="#">Log In</a>
-              <a class="w-1/2 py-4 px-1 text-center font-bold text-lg border-b-4 border-transparent text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary rounded-t-lg"
-                href="#">Sign Up</a>
+              <a id="loginTab"
+                class="w-1/2 py-4 px-1 text-center font-bold text-lg border-b-4 border-primary text-primary rounded-t-lg cursor-pointer"
+                href="loginpage.html">Log In</a>
+              <a id="signupTab"
+                class="w-1/2 py-4 px-1 text-center font-bold text-lg border-b-4 border-transparent text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary rounded-t-lg cursor-pointer"
+                href="regitrationpage.html">Sign Up</a>
             </nav>
           </div>
-          <form action="#" class="space-y-6" method="POST">
+
+          <!-- Login Form -->
+          <form id="loginForm" class="space-y-6" method="POST">
             <div>
-              <label class="sr-only" for="role">Select Role</label>
+              <label class="sr-only" for="login-role">Select Role</label>
               <select
                 class="form-select appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="role" name="role">
-                <option selected="">Who are you?</option>
-                <option>Student</option>
-                <option>Teacher</option>
-                <option>Mentor</option>
+                id="login-role" name="role">
+                <option value="" selected disabled>Who are you?</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="mentor">Mentor</option>
               </select>
             </div>
             <div>
-              <label class="sr-only" for="email-address">Email address</label>
+              <label class="sr-only" for="login-email">Email address</label>
               <input autocomplete="email"
                 class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="email-address" name="email" placeholder="Your Email" required="" type="email" />
+                id="login-email" name="email" placeholder="Your Email" required type="email" />
             </div>
             <div>
-              <label class="sr-only" for="password">Password</label>
+              <label class="sr-only" for="login-password">Password</label>
               <input autocomplete="current-password"
                 class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="password" name="password" placeholder="Your Password" required="" type="password" />
+                id="login-password" name="password" placeholder="Your Password" required type="password" />
             </div>
             <div>
               <button
                 class="w-full flex justify-center py-4 px-4 border border-transparent rounded-full shadow-lg text-lg font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
                 type="submit">
-                Log In Now!
+                <span id="loginLoading" class="loading">⟳</span>
+                <span id="loginText">Log In Now!</span>
               </button>
             </div>
           </form>
+
+          <!-- Signup Form (Hidden by default) -->
+          <form id="signupForm" class="space-y-6 hidden" method="POST">
+            <div>
+              <label class="sr-only" for="signup-role">Select Role</label>
+              <select
+                class="form-select appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
+                id="signup-role" name="role">
+                <option value="" selected disabled>Who are you?</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="mentor">Mentor</option>
+              </select>
+            </div>
+            <div>
+              <label class="sr-only" for="signup-name">Full Name</label>
+              <input
+                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
+                id="signup-name" name="name" placeholder="Your Full Name" required type="text" />
+            </div>
+            <div>
+              <label class="sr-only" for="signup-email">Email address</label>
+              <input autocomplete="email"
+                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
+                id="signup-email" name="email" placeholder="Your Email" required type="email" />
+            </div>
+            <div>
+              <label class="sr-only" for="signup-password">Password</label>
+              <input autocomplete="new-password"
+                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
+                id="signup-password" name="password" placeholder="Your Password" required type="password" />
+            </div>
+            <div>
+              <label class="sr-only" for="signup-confirm-password">Confirm Password</label>
+              <input autocomplete="new-password"
+                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
+                id="signup-confirm-password" name="confirm-password" placeholder="Confirm Password" required
+                type="password" />
+            </div>
+            <div>
+              <button
+                class="w-full flex justify-center py-4 px-4 border border-transparent rounded-full shadow-lg text-lg font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                type="submit">
+                <span id="signupLoading" class="loading">⟳</span>
+                <span id="signupText">Sign Up Now!</span>
+              </button>
+            </div>
+          </form>
+
           <div class="mt-8">
             <div class="relative">
               <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-t-2 border-gray-300 dark:border-gray-600"></div>
               </div>
               <div class="relative flex justify-center text-lg">
-                <span class="px-3 bg-background-light dark:bg-background-dark/70 text-gray-500 dark:text-gray-400">Or
+                <span class="px-3 bg-white dark:bg-background-dark/70 text-gray-500 dark:text-gray-400">Or
                   connect with</span>
               </div>
             </div>
             <div class="mt-6 grid grid-cols-1 gap-3">
-              <button
+              <button id="googleLoginBtn"
                 class="w-full inline-flex justify-center items-center py-3 px-4 border-2 border-gray-300 dark:border-gray-600 rounded-full bg-background-light dark:bg-background-dark text-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary/20 transition duration-300 ease-in-out">
                 <svg aria-hidden="true" class="w-6 h-6 mr-3 -ml-1" data-icon="google" data-prefix="fab"
                   focusable="false" role="img" viewBox="0 0 488 512" xmlns="http://www.w3.org/2000/svg">
@@ -172,7 +273,7 @@
                 </svg>
                 Google Magic
               </button>
-              <button
+              <button id="phoneLoginBtn"
                 class="w-full inline-flex justify-center items-center py-3 px-4 border-2 border-gray-300 dark:border-gray-600 rounded-full bg-background-light dark:bg-background-dark text-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary/20 transition duration-300 ease-in-out">
                 <span class="material-symbols-outlined w-6 h-6 mr-3 -ml-1">phone_android</span>
                 Phone Power
@@ -192,13 +293,292 @@
               Policy</a>
             <a class="text-lg text-gray-600 dark:text-gray-300 hover:text-primary font-medium" href="#">Contact Us</a>
           </div>
-          <p class="text-md text-gray-500 dark:text-gray-400">© 2024 Gramik Digital Pathshala. All rights reserved. Have fun learning!
+          <p class="text-md text-gray-500 dark:text-gray-400">© 2024 Gramik Digital Pathshala. All rights reserved. Have
+            fun learning!
           </p>
         </div>
       </div>
     </footer>
   </div>
 
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCs6RK2HbbpR3lWXy64dPvvSIUGtLyVM0Y",
+      authDomain: "learningpath-c6733.firebaseapp.com",
+      databaseURL: "https://learningpath-c6733-default-rtdb.firebaseio.com",
+      projectId: "learningpath-c6733",
+      storageBucket: "learningpath-c6733.firebasestorage.app",
+      messagingSenderId: "372727572304",
+      appId: "1:372727572304:web:7beb4ec9e06d7959bc6e55",
+      measurementId: "G-YF3K4G82F6"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    // UI Elements
+    const loginTab = document.getElementById('loginTab');
+    const signupTab = document.getElementById('signupTab');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const googleLoginBtn = document.getElementById('googleLoginBtn');
+    const phoneLoginBtn = document.getElementById('phoneLoginBtn');
+    const notification = document.getElementById('notification');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    // Tab switching functionality
+    loginTab.addEventListener('click', () => {
+      loginTab.classList.add('border-primary', 'text-primary');
+      loginTab.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+      signupTab.classList.remove('border-primary', 'text-primary');
+      signupTab.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+      loginForm.classList.remove('hidden');
+      signupForm.classList.add('hidden');
+    });
+
+    signupTab.addEventListener('click', () => {
+      signupTab.classList.add('border-primary', 'text-primary');
+      signupTab.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+      loginTab.classList.remove('border-primary', 'text-primary');
+      loginTab.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+      signupForm.classList.remove('hidden');
+      loginForm.classList.add('hidden');
+    });
+
+    // Show notification
+    function showNotification(message, type = 'success') {
+      notification.textContent = message;
+      notification.className = `notification ${type} show`;
+
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 4000);
+    }
+
+    // Toggle loading state
+    function toggleLoading(buttonId, isLoading) {
+      const loadingElement = document.getElementById(`${buttonId}Loading`);
+      const textElement = document.getElementById(`${buttonId}Text`);
+
+      if (isLoading) {
+        loadingElement.classList.add('active');
+        textElement.style.display = 'none';
+      } else {
+        loadingElement.classList.remove('active');
+        textElement.style.display = 'inline';
+      }
+    }
+
+    // Save user data to Firebase Realtime Database
+    function saveUserData(userId, fullName, email, role) {
+      const userData = {
+        fullName: fullName,
+        email: email,
+        role: role,
+        createdAt: new Date().toISOString()
+      };
+
+      return database.ref('users/' + userId).set(userData);
+    }
+
+    // Email/Password Login
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const role = document.getElementById('login-role').value;
+
+      if (!role) {
+        showNotification('Please select your role', 'error');
+        return;
+      }
+
+      toggleLoading('login', true);
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          showNotification(`Welcome back, ${user.email}!`, 'success');
+
+          // Redirect to dashboard after successful login
+          setTimeout(() => {
+            // In a real app, redirect to dashboard
+            // window.location.href = 'dashboard.html';
+            console.log('Redirecting to dashboard...');
+          }, 1500);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          if (errorCode === 'auth/user-not-found') {
+            showNotification('No account found with this email. Please sign up.', 'error');
+          } else if (errorCode === 'auth/wrong-password') {
+            showNotification('Incorrect password. Please try again.', 'error');
+          } else {
+            showNotification('Login failed: ' + errorMessage, 'error');
+          }
+        })
+        .finally(() => {
+          toggleLoading('login', false);
+        });
+    });
+
+    // Email/Password Signup
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+      const role = document.getElementById('signup-role').value;
+
+      if (!role) {
+        showNotification('Please select your role', 'error');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showNotification('Passwords do not match', 'error');
+        return;
+      }
+
+      if (password.length < 6) {
+        showNotification('Password should be at least 6 characters', 'error');
+        return;
+      }
+
+      toggleLoading('signup', true);
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed up successfully
+          const user = userCredential.user;
+
+          // Save user data to database
+          return saveUserData(user.uid, name, email, role);
+        })
+        .then(() => {
+          showNotification('Account created successfully! Welcome to Gramik Digital Pathshala.', 'success');
+
+          // Redirect to dashboard after successful signup
+          setTimeout(() => {
+            // In a real app, redirect to dashboard
+            // window.location.href = 'dashboard.html';
+            console.log('Redirecting to dashboard...');
+          }, 1500);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          if (errorCode === 'auth/email-already-in-use') {
+            showNotification('This email is already registered. Please log in.', 'error');
+          } else if (errorCode === 'auth/weak-password') {
+            showNotification('Password is too weak. Please choose a stronger password.', 'error');
+          } else if (errorCode === 'auth/invalid-email') {
+            showNotification('Invalid email address. Please check your email.', 'error');
+          } else {
+            showNotification('Signup failed: ' + errorMessage, 'error');
+          }
+        })
+        .finally(() => {
+          toggleLoading('signup', false);
+        });
+    });
+
+    // Google Authentication
+    googleLoginBtn.addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      // Determine which role is selected based on active form
+      const roleElement = loginForm.classList.contains('hidden') ?
+        document.getElementById('signup-role') : document.getElementById('login-role');
+      const role = roleElement.value;
+
+      if (!role) {
+        showNotification('Please select your role before signing in with Google', 'error');
+        return;
+      }
+
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          // This gives you a Google Access Token
+          const credential = result.credential;
+          const token = credential.accessToken;
+
+          // The signed-in user info
+          const user = result.user;
+
+          // Check if this is a new user
+          if (result.additionalUserInfo.isNewUser) {
+            // Save user data to database
+            return saveUserData(user.uid, user.displayName, user.email, role);
+          } else {
+            // User already exists, just sign them in
+            showNotification(`Welcome back, ${user.displayName}!`, 'success');
+          }
+        })
+        .then(() => {
+          showNotification('Google authentication successful!', 'success');
+
+          // Redirect to dashboard
+          setTimeout(() => {
+            // In a real app, redirect to dashboard
+            // window.location.href = 'dashboard.html';
+            console.log('Redirecting to dashboard...');
+          }, 1500);
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          showNotification('Google authentication failed: ' + errorMessage, 'error');
+        });
+    });
+
+    // Phone Authentication (Placeholder)
+    phoneLoginBtn.addEventListener('click', () => {
+      showNotification('Phone authentication requires additional setup. Please use email or Google authentication for now.', 'error');
+    });
+
+    // Dark Mode Toggle
+    darkModeToggle.addEventListener('click', () => {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        darkModeToggle.innerHTML = '<span class="material-symbols-outlined">light_mode</span>';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        darkModeToggle.innerHTML = '<span class="material-symbols-outlined">dark_mode</span>';
+      }
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+      darkModeToggle.innerHTML = '<span class="material-symbols-outlined">light_mode</span>';
+    }
+
+    // Monitor authentication state
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        console.log('User is signed in:', user);
+      } else {
+        // User is signed out
+        console.log('User is signed out');
+      }
+    });
+  </script>
 </body>
 
 </html>
