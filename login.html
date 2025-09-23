@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join | Gramik Digital Pathshala</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #6c757d;
+      --accent-color: #28a745;
+      --background-color: #f0f2f5;
+      --card-bg-color: #ffffff;
+      --text-color: #343a40;
+      --heading-color: #212529;
+      --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      --border-radius: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .header {
+      background-color: var(--card-bg-color);
+      box-shadow: var(--box-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .logo i { margin-right: 10px; font-size: 1.7rem; }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      transition: color 0.3s ease, transform 0.2s ease;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--primary-color); transform: translateY(-2px); }
+    .nav-links a.cta-button {
+      background-color: var(--accent-color);
+      color: #fff;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    }
+    .nav-links a.cta-button:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+    }
+    #language-selector {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid var(--secondary-color);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+
+    /* Background Image Section */
+    .section {
+      padding: 6rem 0;
+      background: url('https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg') no-repeat center center/cover;
+      position: relative;
+      z-index: 1;
+    }
+    .section::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      z-index: -1;
+    }
+
+    .login-container {
+      max-width: 500px;
+      margin: 6rem auto;
+      padding: 2rem;
+      background-color: var(--card-bg-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      text-align: center;
+    }
+    .login-container h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    .login-container p {
+      font-size: 1rem;
+      color: var(--secondary-color);
+      margin-bottom: 2rem;
+    }
+    .login-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .login-options button {
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .login-options button:hover { background-color: #0056b3; }
+
+    /* Register Option Styling */
+    .register-option {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: var(--text-color);
+    }
+    .register-option a {
+      color: var(--accent-color);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .register-option a:hover {
+      text-decoration: underline;
+    }
+
+    /* Google Login Button */
+    .google-login-btn {
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #ddd;
+      padding: 0.9rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .google-login-btn img {
+      width: 22px;
+      height: 22px;
+    }
+    .google-login-btn:hover {
+      background-color: #f8f9fa;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .footer {
+      background-color: var(--heading-color);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 0;
+      margin-top: 6rem;
+      font-size: 0.95rem;
+    }
+    .footer .social-links { margin-top: 1.5rem; }
+    .footer .social-links a {
+      color: #fff;
+      margin: 0 0.8rem;
+      font-size: 1.8rem;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+    .footer .social-links a:hover { color: var(--primary-color); transform: translateY(-3px); }
+
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; gap: 1.5rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+      .logo { font-size: 1.5rem; }
+      .login-container { margin: 4rem auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="logo"><i class="fas fa-graduation-cap"></i> <span data-i18n="website_title">Gramik Digital Pathshala</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="courses.html" data-i18n="nav_courses">Courses</a></li>
+          <li><a href="index.html#mentor" data-i18n="nav_mentor">Mentor</a></li>
+          <li><a href="index.html#about" data-i18n="nav_about">About Us</a></li>
+          <li><a href="login.html" class="cta-button" data-i18n="nav_join">Join Now</a></li>
+        </ul>
+      </nav>
+      <select id="language-selector">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="pa">ਪੰਜਾਬੀ</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container login-container">
+        <h2 data-i18n="login_title">Join Gramik Digital Pathshala</h2>
+        <p data-i18n="login_subheading">Choose your login option below to access our platform.</p>
+        <div class="login-options">
+          <button data-i18n="login_student">Login as Student</button>
+          <button data-i18n="login_mentor">Login as Mentor</button>
+          <button data-i18n="login_user">Login as User</button>
+        </div>
+        <button class="google-login-btn">
+          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
+          <span data-i18n="login_google">Sign in with Google</span>
+        </button>
+        <div class="register-option">
+          <span data-i18n="no_account">Don't have an account?</span>
+          <a href="registration.html" data-i18n="register_now">Register Now</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p data-i18n="footer_text">&copy; 2025 Gramik Digital Pathshala. All Rights Reserved. Designed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for Future Leaders.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        website_title: "Gramik Digital Pathshala",
+        nav_home: "Home",
+        nav_courses: "Courses",
+        nav_mentor: "Mentor",
+        nav_about: "About Us",
+        nav_join: "Join Now",
+        login_title: "Join Gramik Digital Pathshala",
+        login_subheading: "Choose your login option below to access our platform.",
+        login_student: "Login as Student",
+        login_mentor: "Login as Mentor",
+        login_user: "Login as User",
+        login_google: "Sign in with Google",
+        no_account: "Don't have an account?",
+        register_now: "Register Now",
+        footer_text: "© 2025 Gramik Digital Pathshala. All Rights Reserved. Designed with ❤️ for Future Leaders."
+      },
+      hi: {
+        website_title: "ग्रामिक डिजिटल पाठशाला",
+        nav_home: "होम",
+        nav_courses: "कोर्स",
+        nav_mentor: "मेंटर",
+        nav_about: "हमारे बारे में",
+        nav_join: "अभी जुड़ें",
+        login_title: "ग्रामिक डिजिटल पाठशाला से जुड़ें",
+        login_subheading: "हमारे मंच तक पहुंचने के लिए नीचे अपना लॉगिन विकल्प चुनें।",
+        login_student: "छात्र के रूप में लॉगिन करें",
+        login_mentor: "मेंटर के रूप में लॉगिन करें",
+        login_user: "उपयोगकर्ता के रूप में लॉगिन करें",
+        login_google: "गूगल से साइन इन करें",
+        no_account: "खाता नहीं है?",
+        register_now: "अभी पंजीकरण करें",
+        footer_text: "© 2025 ग्रामिक डिजिटल पाठशाला। सर्वाधिकार सुरक्षित। भविष्य के नेताओं के लिए ❤️ के साथ डिज़ाइन किया गया।"
+      },
+      pa: {
+        website_title: "ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ",
+        nav_home: "ਘਰ",
+        nav_courses: "ਕੋਰਸ",
+        nav_mentor: "ਮੈਂਟਰ",
+        nav_about: "ਸਾਡੇ ਬਾਰੇ",
+        nav_join: "ਹੁਣੇ ਜੁੜੋ",
+        login_title: "ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ",
+        login_subheading: "ਸਾਡੇ ਪਲੇਟਫਾਰਮ ਤੱਕ ਪਹੁੰਚ ਕਰਨ ਲਈ ਹੇਠਾਂ ਆਪਣਾ ਲਾਗਇਨ ਵਿਕਲਪ ਚੁਣੋ।",
+        login_student: "ਵਿਦਿਆਰਥੀ ਵਜੋਂ ਲਾਗਇਨ ਕਰੋ",
+        login_mentor: "ਮੈਂਟਰ ਵਜੋਂ ਲਾਗਇਨ ਕਰੋ",
+        login_user: "ਉਪਭੋਗਤਾ ਵਜੋਂ ਲਾਗਇਨ ਕਰੋ",
+        login_google: "ਗੂਗਲ ਨਾਲ ਸਾਈਨ ਇਨ ਕਰੋ",
+        no_account: "ਕੋਈ ਖਾਤਾ ਨਹੀਂ ਹੈ?",
+        register_now: "ਹੁਣੇ ਰਜਿਸਟਰ ਕਰੋ",
+        footer_text: "© 2025 ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ। ਸਭ ਹੱਕ ਰਾਖਵੇਂ ਹਨ। ਭਵਿੱਖ ਦੇ ਲੀਡਰਾਂ ਲਈ ❤️ ਨਾਲ ਡਿਜ਼ਾਈਨ ਕੀਤਾ ਗਿਆ।"
+      }
+    };
+
+    const languageSelector = document.getElementById('language-selector');
+
+    function updateContent(language) {
+      const currentTranslations = translations[language];
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (currentTranslations[key]) {
+          element.innerHTML = currentTranslations[key];
+        }
+      });
+    }
+
+    const storedLanguage = localStorage.getItem('language') || 'en';
+    languageSelector.value = storedLanguage;
+    updateContent(storedLanguage);
+
+    languageSelector.addEventListener('change', (event) => {
+      const newLanguage = event.target.value;
+      localStorage.setItem('language', newLanguage);
+      updateContent(newLanguage);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramik Digital Pathshala | Your Gateway to Knowledge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+        <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --background-color: #f0f2f5;
+            --card-bg-color: #ffffff;
+            --text-color: #343a40;
+            --heading-color: #212529;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .header {
+            background-color: var(--card-bg-color);
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.7rem;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        .nav-links a.cta-button {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        }
+        .nav-links a.cta-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+        }
+        #language-selector {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid var(--secondary-color);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRoZxrxMb6mpoptuSkL7hZwIKIzt0lUW0LQ26NSyKCxtpUQDLYpe7xLltLLld4Gub9aSn3Vg2kro6mSl2VT6pSHXBTEDXZvggkaaVn3mVqWEYFdm0w') no-repeat center center/cover;
+            color: #fff;
+            text-align: center;
+            padding: 8rem 0;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .hero-content p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+        .hero .cta-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+        }
+        .hero .cta-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 123, 255, 0.4);
+        }
+        .section {
+            padding: 6rem 0;
+            background-color: var(--background-color);
+        }
+        .section:nth-of-type(even) {
+            background-color: var(--card-bg-color);
+        }
+        .section-title {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            color: var(--heading-color);
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 5px;
+            background-color: var(--primary-color);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        .about-content {
+            text-align: center;
+            max-width: 900px;
+            margin: auto;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+        .intro-section {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            padding: 4rem;
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 4rem;
+        }
+        .intro-image {
+            flex: 1;
+            text-align: center;
+        }
+        .intro-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        .intro-text {
+            flex: 1;
+        }
+        .intro-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .intro-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .mentor-section {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 3rem;
+            padding: 4rem;
+        }
+        .mentor-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .mentor-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 600px;
+        }
+        .chat-header {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .user-message, .gemini-message {
+            max-width: 80%;
+            padding: 0.8rem 1.2rem;
+            border-radius: 18px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #e0e0e0;
+            color: #000;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .gemini-message {
+            background-color: var(--primary-color);
+            color: #fff;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-input-container {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .chat-input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 1rem;
+        }
+        .chat-input:focus {
+            border-color: var(--primary-color);
+        }
+        .chat-send-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .chat-send-button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            background-color: var(--heading-color);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 6rem;
+            font-size: 0.95rem;
+        }
+        .footer .social-links {
+            margin-top: 1.5rem;
+            font-size: 0;
+        }
+        .footer .social-links a {
+            color: #fff;
+            margin: 0 0.8rem;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .footer .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        @media (max-width: 992px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .intro-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .intro-text h2 {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .hero {
+                padding: 4rem 0;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .section {
+                padding: 4rem 0;
+            }
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 3rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero .cta-button {
+                padding: 0.8rem 1.8rem;
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            .footer .social-links a {
+                font-size: 1.5rem;
+                margin: 0 0.4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> <span data-i18n="website_title">Gramik Digital Pathshala</span></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="courses.html" data-i18n="nav_courses">Courses</a></li>
+                    <li><a href="#mentor" data-i18n="nav_mentor">Mentor</a></li>
+                    <li><a href="#about" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="login.html" class="cta-button" data-i18n="nav_join">Join Now</a></li>
+                </ul>
+            </nav>
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="pa">Punjabi</option>
+            </select>
+        </div>
+    </header>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 data-i18n="hero_heading">Empowering Education, One Step at a Time</h1>
+                <p data-i18n="hero_subheading">Welcome to Gramik Digital Pathshala, your all-in-one platform for quality courses and smart learning. Step into the world of knowledge and unlock your full potential.</p>
+                <a href="courses.html" class="cta-button" data-i18n="explore_button">Explore Courses <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container intro-section">
+                <div class="intro-image">
+                    <img src="/assets/edu.jpg" alt="Introduction to Gramik Digital Pathshala">
+                </div>
+                <div class="intro-text">
+                    <h2 data-i18n="intro_title">What is Gramik Digital Pathshala?</h2>
+                    <p data-i18n="intro_para1">Gramik Digital Pathshala is an online platform designed to help students grow with enthusiasm and a clear understanding of their subjects. Our mission is to provide every child with a world-class learning experience right from their home.</p>
+                    <p data-i18n="intro_para2">On our website, you can achieve your dreams through interactive lessons, live classes, and continuous support. This is your personal learning ecosystem, built for your success.</p>
+                </div>
+            </div>
+        </section>
+        <section id="mentor" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="mentor_title">Meet Our Mentor: Gemini</h2>
+                <div class="chat-container">
+                    <div class="chat-header" data-i18n="chat_header">Ask Gemini anything!</div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="gemini-message" data-i18n="chat_welcome">Hello! How can I assist you with your studies today?</div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="user-input" placeholder="Type your question..." data-i18n-placeholder="chat_placeholder">
+                        <button class="chat-send-button" id="send-button" data-i18n="chat_send_button">Ask</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="about_title">Our Story</h2>
+                <div class="about-content">
+                    <p data-i18n="about_para1">Gramik Digital Pathshala is not just a platform, but a vision to provide excellent and accessible education to every child. We want to build a community where learning is not confined to books, but becomes an interesting and interactive experience.</p>
+                    <p data-i18n="about_para2">Our team includes experienced educators, modern technology experts, and passionate individuals who are committed to lighting up your child's future. Our goal is for every student to reach their full potential.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p data-i18n="footer_text">&copy; 2025 Gramik Digital Pathshala. All Rights Reserved. Designed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for Future Leaders.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const translations = {
+            en: {
+                website_title: "Gramik Digital Pathshala",
+                nav_home: "Home",
+                nav_courses: "Courses",
+                nav_mentor: "Mentor",
+                nav_about: "About Us",
+                nav_join: "Join Now",
+                hero_heading: "Empowering Education, One Step at a Time",
+                hero_subheading: "Welcome to Gramik Digital Pathshala, your all-in-one platform for quality courses and smart learning. Step into the world of knowledge and unlock your full potential.",
+                explore_button: "Explore Courses",
+                intro_title: "What is Gramik Digital Pathshala?",
+                intro_para1: "Gramik Digital Pathshala is an online platform designed to help students grow with enthusiasm and a clear understanding of their subjects. Our mission is to provide every child with a world-class learning experience right from their home.",
+                intro_para2: "On our website, you can achieve your dreams through interactive lessons, live classes, and continuous support. This is your personal learning ecosystem, built for your success.",
+                mentor_title: "Meet Our Mentor: Gemini",
+                chat_header: "Ask Gemini anything!",
+                chat_welcome: "Hello! How can I assist you with your studies today?",
+                chat_placeholder: "Type your question...",
+                chat_send_button: "Ask",
+                about_title: "Our Story",
+                about_para1: "Gramik Digital Pathshala is not just a platform, but a vision to provide excellent and accessible education to every child. We want to build a community where learning is not confined to books, but becomes an interesting and interactive experience.",
+                about_para2: "Our team includes experienced educators, modern technology experts, and passionate individuals who are committed to lighting up your child's future. Our goal is for every student to reach their full potential.",
+                footer_text: "© 2025 Gramik Digital Pathshala. All Rights Reserved. Designed with ❤️ for Future Leaders."
+            },
+            hi: {
+                website_title: "ग्रामिक डिजिटल पाठशाला",
+                nav_home: "होम",
+                nav_courses: "कोर्स",
+                nav_mentor: "मेंटर",
+                nav_about: "हमारे बारे में",
+                nav_join: "अभी जुड़ें",
+                hero_heading: "शिक्षा को सशक्त बनाएं, एक-एक कदम करके",
+                hero_subheading: "ग्रामिक डिजिटल पाठशाला में आपका स्वागत है, गुणवत्तापूर्ण पाठ्यक्रमों और स्मार्ट लर्निंग के लिए आपका ऑल-इन-वन प्लेटफॉर्म। ज्ञान की दुनिया में कदम रखें और अपनी पूरी क्षमता को अनलॉक करें।",
+                explore_button: "कोर्स एक्सप्लोर करें",
+                intro_title: "ग्रामिक डिजिटल पाठशाला क्या है?",
+                intro_para1: "ग्रामिक डिजिटल पाठशाला एक ऑनलाइन मंच है जो छात्रों को उत्साह और अपने विषयों की स्पष्ट समझ के साथ आगे बढ़ने में मदद करने के लिए बनाया गया है। हमारा मिशन हर बच्चे को उनके घर से ही विश्वस्तरीय सीखने का अनुभव प्रदान करना है।",
+                intro_para2: "हमारी वेबसाइट पर, आप इंटरैक्टिव पाठ, लाइव कक्षाएं और निरंतर समर्थन के माध्यम से अपने सपनों को प्राप्त कर सकते हैं। यह आपकी व्यक्तिगत सीखने की दुनिया है, जो आपकी सफलता के लिए बनाई गई है।",
+                mentor_title: "हमारे मेंटर से मिलें: जेमिनी",
+                chat_header: "जेमिनी से कुछ भी पूछें!",
+                chat_welcome: "नमस्ते! आज मैं आपकी पढ़ाई में कैसे मदद कर सकता हूँ?",
+                chat_placeholder: "अपना सवाल लिखें...",
+                chat_send_button: "पूछें",
+                about_title: "हमारी कहानी",
+                about_para1: "ग्रामिक डिजिटल पाठशाला सिर्फ एक मंच नहीं, बल्कि एक दृष्टि है - हर बच्चे तक बेहतरीन और सुलभ शिक्षा पहुंचाना। हम एक ऐसी कम्युनिटी बनाना चाहते हैं जहां सीखना सिर्फ किताबों तक सीमित न हो, बल्कि एक रोचक और इंटरैक्टिव अनुभव बन जाए।",
+                about_para2: "हमारी टीम में अनुभवी शिक्षक, आधुनिक प्रौद्योगिकी विशेषज्ञ, और उत्साही व्यक्ति शामिल हैं, जो मिलकर आपके बच्चे के भविष्य को रोशन करने के लिए प्रतिबद्ध हैं। हमारा मकसद है कि हर छात्र अपनी पूरी क्षमता तक पहुंचे।",
+                footer_text: "© 2025 ग्रामिक डिजिटल पाठशाला। सर्वाधिकार सुरक्षित। भविष्य के नेताओं के लिए ❤️ के साथ डिज़ाइन किया गया।"
+            },
+            pa: {
+                website_title: "ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ",
+                nav_home: "ਘਰ",
+                nav_courses: "ਕੋਰਸ",
+                nav_mentor: "ਮੈਂਟਰ",
+                nav_about: "ਸਾਡੇ ਬਾਰੇ",
+                nav_join: "ਹੁਣੇ ਜੁੜੋ",
+                hero_heading: "ਸ਼ਿਖਿਆ ਨੂੰ ਮਜ਼ਬੂਤ ਬਣਾਓ, ਇੱਕ ਕਦਮ ਤੇ ਇੱਕ ਕਦਮ",
+                hero_subheading: "ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ ਵਿੱਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ, ਗੁਣਵੱਤਾ ਵਾਲੇ ਕੋਰਸ ਅਤੇ ਸਮਾਰਟ ਲਰਨਿੰਗ ਲਈ ਤੁਹਾਡਾ ਆਲ-ਇਨ-ਵਨ ਪਲੇਟਫਾਰਮ। ਗਿਆਨ ਦੀ ਦੁਨੀਆ ਵਿੱਚ ਕਦਮ ਰੱਖੋ ਅਤੇ ਆਪਣੀ ਪੂਰੀ ਸਮਰੱਥਾ ਨੂੰ ਖੋਲ੍ਹੋ।",
+                explore_button: "ਕੋਰਸ ਵੇਖੋ",
+                intro_title: "ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ ਕੀ ਹੈ?",
+                intro_para1: "ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ ਇੱਕ ਆਨਲਾਈਨ ਪਲੇਟਫਾਰਮ ਹੈ ਜੋ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਉਤਸ਼ਾਹ ਅਤੇ ਆਪਣੇ ਵਿਸ਼ਿਆਂ ਦੀ ਸਪਸ਼ਟ ਸਮਝ ਨਾਲ ਅੱਗੇ ਵਧਣ ਵਿੱਚ ਮਦਦ ਕਰਨ ਲਈ ਬਣਾਇਆ ਗਿਆ ਹੈ। ਸਾਡਾ ਮਿਸ਼ਨ ਹਰ ਬੱਚੇ ਨੂੰ ਉਹਨਾਂ ਦੇ ਘਰ ਤੋਂ ਹੀ ਵਿਸ਼ਵ-ਪੱਧਰੀ ਸਿੱਖਣ ਦਾ ਅਨੁਭਵ ਦੇਣਾ ਹੈ।",
+                intro_para2: "ਸਾਡੀ ਵੈਬਸਾਈਟ 'ਤੇ, ਤੁਸੀਂ ਇੰਟਰੈਕਟਿਵ ਪਾਠਾਂ, ਲਾਈਵ ਕਲਾਸਾਂ ਅਤੇ ਲਗਾਤਾਰ ਸਹਾਇਤਾ ਰਾਹੀਂ ਆਪਣੇ ਸੁਪਨਿਆਂ ਨੂੰ ਪੂਰਾ ਕਰ ਸਕਦੇ ਹੋ। ਇਹ ਤੁਹਾਡਾ ਨਿੱਜੀ ਸਿੱਖਣ ਦਾ ਪਰਿਵੇਸ਼ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਸਫਲਤਾ ਲਈ ਬਣਾਇਆ ਗਿਆ ਹੈ।",
+                mentor_title: "ਸਾਡੇ ਮੈਂਟਰ ਨਾਲ ਮਿਲੋ: ਜੈਮਿਨੀ",
+                chat_header: "ਜੈਮਿਨੀ ਨੂੰ ਕੁਝ ਵੀ ਪੁੱਛੋ!",
+                chat_welcome: "ਸਤ ਸ੍ਰੀ ਅਕਾਲ! ਅੱਜ ਮੈਂ ਤੁਹਾਡੀ ਪੜ੍ਹਾਈ ਵਿੱਚ ਕਿਵੇਂ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?",
+                chat_placeholder: "ਆਪਣਾ ਸਵਾਲ ਲਿਖੋ...",
+                chat_send_button: "ਪੁੱਛੋ",
+                about_title: "ਸਾਡੀ ਕਹਾਣੀ",
+                about_para1: "ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ ਸਿਰਫ ਇੱਕ ਪਲੇਟਫਾਰਮ ਨਹੀਂ, ਸਗੋਂ ਇੱਕ ਵਿਜ਼ਨ ਹੈ - ਹਰ ਬੱਚੇ ਤੱਕ ਸ਼ਾਨਦਾਰ ਅਤੇ ਪਹੁੰਚਯੋਗ ਸਿੱਖਿਆ ਪਹੁੰਚਾਉਣਾ। ਅਸੀਂ ਇੱਕ ਐਸੀ ਕਮਿਊਨਟੀ ਬਣਾਉਣਾ ਚਾਹੁੰਦੇ ਹਾਂ ਜਿੱਥੇ ਸਿੱਖਣਾ ਸਿਰਫ ਕਿਤਾਬਾਂ ਤੱਕ ਸੀਮਿਤ ਨਾ ਰਹੇ, ਸਗੋਂ ਇੱਕ ਦਿਲਚਸਪ ਅਤੇ ਇੰਟਰੈਕਟਿਵ ਅਨੁਭਵ ਬਣੇ।",
+                about_para2: "ਸਾਡੀ ਟੀਮ ਵਿੱਚ ਅਨੁਭਵੀ ਅਧਿਆਪਕ, ਆਧੁਨਿਕ ਤਕਨਾਲੋਜੀ ਵਿਸ਼ੇਸ਼ਜਣ, ਅਤੇ ਉਤਸ਼ਾਹੀ ਲੋਕ ਸ਼ਾਮਲ ਹਨ, ਜੋ ਮਿਲਕੇ ਤੁਹਾਡੇ ਬੱਚੇ ਦਾ ਭਵਿੱਖ ਰੌਸ਼ਨ ਕਰਨ ਲਈ ਵਚਨਬੱਧ ਹਨ। ਸਾਡਾ ਲਕਸ਼ ਹੈ ਕਿ ਹਰ ਵਿਦਿਆਰਥੀ ਆਪਣੀ ਪੂਰੀ ਸਮਰੱਥਾ ਤੱਕ ਪਹੁੰਚੇ।",
+                footer_text: "© 2025 ਗ੍ਰਾਮਿਕ ਡਿਜ਼ਿਟਲ ਪਾਠਸ਼ਾਲਾ। ਸਭ ਹੱਕ ਰਾਖਵੇਂ ਹਨ। ਭਵਿੱਖ ਦੇ ਲੀਡਰਾਂ ਲਈ ❤️ ਨਾਲ ਡਿਜ਼ਾਈਨ ਕੀਤਾ ਗਿਆ।"
+            }
+        };
+
+        const languageSelector = document.getElementById('language-selector');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        function createMessageElement(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(sender === 'user' ? 'user-message' : 'gemini-message');
+            messageElement.textContent = message;
+            return messageElement;
+        }
+
+        async function getGeminiResponse(question) {
+            return `This is a dummy response for your question: "${question}". To get a real answer, connect a backend API.`;
+        }
+
+        async function handleSendMessage() {
+            const question = userInput.value.trim();
+            if (!question) return;
+
+            chatMessages.appendChild(createMessageElement(question, 'user'));
+            userInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const typingIndicator = createMessageElement('Gemini is typing...', 'gemini-message');
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const answer = await getGeminiResponse(question);
+
+            chatMessages.removeChild(typingIndicator);
+            chatMessages.appendChild(createMessageElement(answer, 'gemini'));
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        sendButton.addEventListener('click', handleSendMessage);
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+
+        function updateContent(language) {
+            const currentTranslations = translations[language];
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (currentTranslations[key]) {
+                    element.innerHTML = currentTranslations[key];
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (currentTranslations[key]) {
+                    element.placeholder = currentTranslations[key];
+                }
+            });
+        }
+
+        const storedLanguage = localStorage.getItem('language') || 'en';
+        languageSelector.value = storedLanguage;
+        updateContent(storedLanguage);
+        languageSelector.addEventListener('change', (event) => {
+            const newLanguage = event.target.value;
+            localStorage.setItem('language', newLanguage);
+            updateContent(newLanguage);
+        });
+    </script>
+</body>
+</html>
