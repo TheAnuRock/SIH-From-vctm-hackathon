@@ -2,583 +2,617 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Gramik Digital Pathshala - Login</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link crossorigin="" rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#ff6b6b",
-            "background-light": "#f0f9ff",
-            "background-dark": "#1a1a2e",
-            "accent": "#a2d2ff",
-          },
-          fontFamily: {
-            "display": ["Poppins", "Inter"],
-          },
-          borderRadius: {
-            "DEFAULT": "1rem",
-            "lg": "1.5rem",
-            "xl": "2rem",
-            "full": "9999px"
-          },
-          boxShadow: {
-            'bubbly-lg': '0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05)',
-          }
-        },
-      },
-    }
-  </script>
-  <style>
-    .form-select {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ff6b6b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-      background-position: right 0.75rem center;
-      background-repeat: no-repeat;
-      background-size: 1.5em 1.5em;
-      padding-right: 3rem;
-      -webkit-print-color-adjust: exact;
-      color-adjust: exact;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramik Digital Pathshala - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    .animate-bounce-custom {
-      animation: bounce 1s infinite;
-      animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
-    }
+        body {
+            background: linear-gradient(135deg, #c0d3e3 0%, #b1bac9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-    .notification {
-      position: fixed;
-      top: 100px;
-      right: 20px;
-      padding: 15px 20px;
-      border-radius: 10px;
-      color: white;
-      font-weight: 500;
-      z-index: 1000;
-      opacity: 0;
-      transform: translateX(100%);
-      transition: all 0.3s ease;
-    }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+        }
 
-    .notification.show {
-      opacity: 1;
-      transform: translateX(0);
-    }
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    .notification.success {
-      background-color: #10b981;
-    }
+        .left-panel h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
 
-    .notification.error {
-      background-color: #b8c8db;
-    }
+        .left-panel p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
 
-    .loading {
-      display: none;
-    }
+        .features {
+            list-style: none;
+        }
 
-    .loading.active {
-      display: inline-block;
-      animation: spin 1s linear infinite;
-    }
+        .features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
 
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
+        .features i {
+            margin-right: 10px;
+            color: #4cd964;
+        }
 
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+        .right-panel {
+            flex: 1.2;
+            background: white;
+            padding: 40px;
+        }
 
-    .dark-mode-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 100;
-    }
-  </style>
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h2 {
+            color: #333;
+            font-size: 2rem;
+        }
+
+        .logo span {
+            color: #c0d3e3;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #777;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #c7bcd4;
+            border-bottom: 3px solid #c0d3e3;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #6a11cb;
+            outline: none;
+        }
+
+        .oauth-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .oauth-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .oauth-btn:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .google-btn {
+            color: #db4437;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #777;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #555;
+        }
+
+        .register-link a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+
+        .reset-section {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .reset-section.active {
+            display: block;
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-to-login a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-to-login a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                display: none;
+            }
+
+            .oauth-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
-  <!-- Notification Container -->
-  <div id="notification" class="notification"></div>
-
-  <!-- Dark Mode Toggle -->
-  <button id="darkModeToggle" class="dark-mode-toggle bg-primary text-white p-3 rounded-full shadow-lg">
-    <span class="material-symbols-outlined">dark_mode</span>
-  </button>
-
-  <div class="flex flex-col min-h-screen">
-    <header
-      class="bg-background-light dark:bg-background-dark/50 backdrop-blur-sm sticky top-0 z-10 border-b-2 border-accent">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-20">
-          <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-full bg-accent flex items-center justify-center">
-              <svg class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                  fill="currentColor" />
-              </svg>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white font-display">Gramik Digital Pathshala</h2>
-          </div>
-          <div class="flex items-center gap-2">
-           <a href="loginpage.html" ><button id="loginBtn"
-              class="px-5 py-2 text-lg font-bold bg-primary text-white rounded-full hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark">
-              Log In
-            </button></a>
-           <a href="regitrationpage.html"> <button id="signupBtn"
-              class="px-5 py-2 text-lg font-bold bg-accent text-primary dark:bg-primary/30 dark:text-white rounded-full hover:bg-primary/30 dark:hover:bg-primary/40">
-              Sign Up
-            </button></a>
-          </div>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>Welcome Back!</h1>
+            <p>Sign in to continue your learning journey, access your courses, and connect with your community.</p>
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> Resume your learning progress</li>
+                <li><i class="fas fa-check-circle"></i> Access your personalized dashboard</li>
+                <li><i class="fas fa-check-circle"></i> Connect with your mentors and peers</li>
+                <li><i class="fas fa-check-circle"></i> Track your achievements</li>
+            </ul>
         </div>
-      </div>
-    </header>
-    <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div class="w-full max-w-md space-y-8">
-        <div class="text-center">
-          <h2 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white font-display">Let's Get Started!
-          </h2>
-          <p class="mt-3 text-lg text-gray-600 dark:text-gray-300">Discover your next learning adventure.</p>
+
+        <div class="right-panel">
+            <div class="logo">
+                <h2>Gramik<span>Digital Pathshala</span></h2>
+                <p>Sign in to your account</p>
+            </div>
+
+            <div id="message-container"></div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="email">Email</div>
+                <div class="tab" data-tab="phone">Phone</div>
+                <div class="tab" data-tab="google">Google</div>
+            </div>
+
+            <!-- Email Login Form -->
+            <div class="tab-content active" id="email-tab">
+                <form id="email-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-toggle">
+                            <input type="password" id="password" name="password" required>
+                            <i class="fas fa-eye" id="toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#" id="forgot-password-link">Forgot your password?</a>
+                    </div>
+
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+
+                <div class="reset-section" id="reset-password-section">
+                    <h3>Reset Your Password</h3>
+                    <p>Enter your email address and we'll send you a link to reset your password.</p>
+
+                    <div class="form-group">
+                        <label for="reset-email">Email Address</label>
+                        <input type="email" id="reset-email" name="reset-email" required>
+                    </div>
+
+                    <button type="button" class="btn" id="send-reset-link">Send Reset Link</button>
+                    <div class="back-to-login">
+                        <a href="#" id="back-to-login">Back to login</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone Login Form -->
+            <div class="tab-content" id="phone-tab">
+                <form id="phone-form">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="phone-input">
+                            <select id="country-code" name="country-code">
+                                <option value="+91" selected>+91 (IN)</option>
+                            </select>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Send Verification Code</button>
+
+                    <div class="verification-section" id="phone-verification">
+                        <div class="form-group">
+                            <label for="verification-code">Verification Code</label>
+                            <input type="text" id="verification-code" name="verification-code" required>
+                        </div>
+                        <button type="button" class="btn" id="verify-phone-btn">Verify Code</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Google Login -->
+            <div class="tab-content" id="google-tab">
+                <div class="oauth-buttons">
+                    <button type="button" class="oauth-btn google-btn" id="google-login-btn">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </div>
+
+                <p style="text-align: center; margin-top: 20px; color: #777;">
+                    You will be redirected to Google to complete your authentication.
+                </p>
+            </div>
+
+            <div class="register-link">
+                Don't have an account? <a href="regitrationpage.html">Register now</a>
+            </div>
         </div>
-        <div class="bg-white dark:bg-background-dark/70 rounded-2xl shadow-bubbly-lg p-6 sm:p-8">
-          <div class="border-b-2 border-accent pb-4 mb-6">
-            <nav aria-label="Tabs" class="-mb-px flex space-x-6">
-              <a id="loginTab"
-                class="w-1/2 py-4 px-1 text-center font-bold text-lg border-b-4 border-primary text-primary rounded-t-lg cursor-pointer"
-                href="loginpage.html">Log In</a>
-              <a id="signupTab"
-                class="w-1/2 py-4 px-1 text-center font-bold text-lg border-b-4 border-transparent text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary rounded-t-lg cursor-pointer"
-                href="regitrationpage.html">Sign Up</a>
-            </nav>
-          </div>
+    </div>
 
-          <!-- Login Form -->
-          <form id="loginForm" class="space-y-6" method="POST">
-            <div>
-              <label class="sr-only" for="login-role">Select Role</label>
-              <select
-                class="form-select appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="login-role" name="role">
-                <option value="" selected disabled>Who are you?</option>
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-                <option value="mentor">Mentor</option>
-              </select>
-            </div>
-            <div>
-              <label class="sr-only" for="login-email">Email address</label>
-              <input autocomplete="email"
-                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="login-email" name="email" placeholder="Your Email" required type="email" />
-            </div>
-            <div>
-              <label class="sr-only" for="login-password">Password</label>
-              <input autocomplete="current-password"
-                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="login-password" name="password" placeholder="Your Password" required type="password" />
-            </div>
-            <div>
-              <button
-                class="w-full flex justify-center py-4 px-4 border border-transparent rounded-full shadow-lg text-lg font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
-                type="submit">
-                <span id="loginLoading" class="loading">⟳</span>
-                <span id="loginText">Log In Now!</span>
-              </button>
-            </div>
-          </form>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCs6RK2HbbpR3lWXy64dPvvSIUGtLyVM0Y",
+            authDomain: "learningpath-c6733.firebaseapp.com",
+            databaseURL: "https://learningpath-c6733-default-rtdb.firebaseio.com",
+            projectId: "learningpath-c6733",
+            storageBucket: "learningpath-c6733.firebasestorage.app",
+            messagingSenderId: "372727572304",
+            appId: "1:372727572304:web:7beb4ec9e06d7959bc6e55",
+            measurementId: "G-YF3K4G82F6"
+        };
 
-          <!-- Signup Form (Hidden by default) -->
-          <form id="signupForm" class="space-y-6 hidden" method="POST">
-            <div>
-              <label class="sr-only" for="signup-role">Select Role</label>
-              <select
-                class="form-select appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="signup-role" name="role">
-                <option value="" selected disabled>Who are you?</option>
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-                <option value="mentor">Mentor</option>
-              </select>
-            </div>
-            <div>
-              <label class="sr-only" for="signup-name">Full Name</label>
-              <input
-                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="signup-name" name="name" placeholder="Your Full Name" required type="text" />
-            </div>
-            <div>
-              <label class="sr-only" for="signup-email">Email address</label>
-              <input autocomplete="email"
-                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="signup-email" name="email" placeholder="Your Email" required type="email" />
-            </div>
-            <div>
-              <label class="sr-only" for="signup-password">Password</label>
-              <input autocomplete="new-password"
-                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="signup-password" name="password" placeholder="Your Password" required type="password" />
-            </div>
-            <div>
-              <label class="sr-only" for="signup-confirm-password">Confirm Password</label>
-              <input autocomplete="new-password"
-                class="appearance-none block w-full px-5 py-4 bg-background-light dark:bg-background-dark border-2 border-gray-300 dark:border-gray-600 rounded-full placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-primary focus:border-primary text-lg"
-                id="signup-confirm-password" name="confirm-password" placeholder="Confirm Password" required
-                type="password" />
-            </div>
-            <div>
-              <button
-                class="w-full flex justify-center py-4 px-4 border border-transparent rounded-full shadow-lg text-lg font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
-                type="submit">
-                <span id="signupLoading" class="loading">⟳</span>
-                <span id="signupText">Sign Up Now!</span>
-              </button>
-            </div>
-          </form>
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
 
-          <div class="mt-8">
-            <div class="relative">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t-2 border-gray-300 dark:border-gray-600"></div>
-              </div>
-              <div class="relative flex justify-center text-lg">
-                <span class="px-3 bg-white dark:bg-background-dark/70 text-gray-500 dark:text-gray-400">Or
-                  connect with</span>
-              </div>
-            </div>
-            <div class="mt-6 grid grid-cols-1 gap-3">
-              <button id="googleLoginBtn"
-                class="w-full inline-flex justify-center items-center py-3 px-4 border-2 border-gray-300 dark:border-gray-600 rounded-full bg-background-light dark:bg-background-dark text-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary/20 transition duration-300 ease-in-out">
-                <svg aria-hidden="true" class="w-6 h-6 mr-3 -ml-1" data-icon="google" data-prefix="fab"
-                  focusable="false" role="img" viewBox="0 0 488 512" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 126 23.4 172.9 61.9l-76.2 74.3C309 101 278.3 88 248 88c-73.2 0-132.3 59.2-132.3 132.3s59.1 132.3 132.3 132.3c79.1 0 114.2-52.6 118.8-78.9H248v-95.2h239.1c.4 12.3 1.2 24.3 1.9 36.4z"
-                    fill="currentColor"></path>
-                </svg>
-                Google Magic
-              </button>
-              <button id="phoneLoginBtn"
-                class="w-full inline-flex justify-center items-center py-3 px-4 border-2 border-gray-300 dark:border-gray-600 rounded-full bg-background-light dark:bg-background-dark text-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-primary/10 dark:hover:bg-primary/20 transition duration-300 ease-in-out">
-                <span class="material-symbols-outlined w-6 h-6 mr-3 -ml-1">phone_android</span>
-                Phone Power
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <footer class="bg-background-light dark:bg-background-dark/50 border-t-2 border-accent">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-5">
-          <div class="flex flex-wrap justify-center gap-x-8 gap-y-3">
-            <a class="text-lg text-gray-600 dark:text-gray-300 hover:text-primary font-medium" href="#">Terms of
-              Service</a>
-            <a class="text-lg text-gray-600 dark:text-gray-300 hover:text-primary font-medium" href="#">Privacy
-              Policy</a>
-            <a class="text-lg text-gray-600 dark:text-gray-300 hover:text-primary font-medium" href="#">Contact Us</a>
-          </div>
-          <p class="text-md text-gray-500 dark:text-gray-400">© 2024 Gramik Digital Pathshala. All rights reserved. Have
-            fun learning!
-          </p>
-        </div>
-      </div>
-    </footer>
-  </div>
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
-  <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyCs6RK2HbbpR3lWXy64dPvvSIUGtLyVM0Y",
-      authDomain: "learningpath-c6733.firebaseapp.com",
-      databaseURL: "https://learningpath-c6733-default-rtdb.firebaseio.com",
-      projectId: "learningpath-c6733",
-      storageBucket: "learningpath-c6733.firebasestorage.app",
-      messagingSenderId: "372727572304",
-      appId: "1:372727572304:web:7beb4ec9e06d7959bc6e55",
-      measurementId: "G-YF3K4G82F6"
-    };
+                // Add active class to clicked tab
+                tab.classList.add('active');
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const database = firebase.database();
-
-    // UI Elements
-    const loginTab = document.getElementById('loginTab');
-    const signupTab = document.getElementById('signupTab');
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
-    const googleLoginBtn = document.getElementById('googleLoginBtn');
-    const phoneLoginBtn = document.getElementById('phoneLoginBtn');
-    const notification = document.getElementById('notification');
-    const darkModeToggle = document.getElementById('darkModeToggle');
-
-    // Tab switching functionality
-    loginTab.addEventListener('click', () => {
-      loginTab.classList.add('border-primary', 'text-primary');
-      loginTab.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-      signupTab.classList.remove('border-primary', 'text-primary');
-      signupTab.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-      loginForm.classList.remove('hidden');
-      signupForm.classList.add('hidden');
-    });
-
-    signupTab.addEventListener('click', () => {
-      signupTab.classList.add('border-primary', 'text-primary');
-      signupTab.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-      loginTab.classList.remove('border-primary', 'text-primary');
-      loginTab.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-      signupForm.classList.remove('hidden');
-      loginForm.classList.add('hidden');
-    });
-
-    // Show notification
-    function showNotification(message, type = 'success') {
-      notification.textContent = message;
-      notification.className = `notification ${type} show`;
-
-      setTimeout(() => {
-        notification.classList.remove('show');
-      }, 4000);
-    }
-
-    // Toggle loading state
-    function toggleLoading(buttonId, isLoading) {
-      const loadingElement = document.getElementById(`${buttonId}Loading`);
-      const textElement = document.getElementById(`${buttonId}Text`);
-
-      if (isLoading) {
-        loadingElement.classList.add('active');
-        textElement.style.display = 'none';
-      } else {
-        loadingElement.classList.remove('active');
-        textElement.style.display = 'inline';
-      }
-    }
-
-    // Save user data to Firebase Realtime Database
-    function saveUserData(userId, fullName, email, role) {
-      const userData = {
-        fullName: fullName,
-        email: email,
-        role: role,
-        createdAt: new Date().toISOString()
-      };
-
-      return database.ref('users/' + userId).set(userData);
-    }
-
-    // Email/Password Login
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-      const role = document.getElementById('login-role').value;
-
-      if (!role) {
-        showNotification('Please select your role', 'error');
-        return;
-      }
-
-      toggleLoading('login', true);
-
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          showNotification(`Welcome back, ${user.email}!`, 'success');
-
-          // Redirect to dashboard after successful login
-          setTimeout(() => {
-            // In a real app, redirect to dashboard
-            // window.location.href = 'dashboard.html';
-            console.log('Redirecting to dashboard...');
-          }, 1500);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-
-          if (errorCode === 'auth/user-not-found') {
-            showNotification('No account found with this email. Please sign up.', 'error');
-          } else if (errorCode === 'auth/wrong-password') {
-            showNotification('Incorrect password. Please try again.', 'error');
-          } else {
-            showNotification('Login failed: ' + errorMessage, 'error');
-          }
-        })
-        .finally(() => {
-          toggleLoading('login', false);
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
         });
-    });
 
-    // Email/Password Signup
-    signupForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+        // Toggle password visibility
+        document.getElementById('toggle-password').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
 
-      const name = document.getElementById('signup-name').value;
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-      const confirmPassword = document.getElementById('signup-confirm-password').value;
-      const role = document.getElementById('signup-role').value;
-
-      if (!role) {
-        showNotification('Please select your role', 'error');
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        showNotification('Passwords do not match', 'error');
-        return;
-      }
-
-      if (password.length < 6) {
-        showNotification('Password should be at least 6 characters', 'error');
-        return;
-      }
-
-      toggleLoading('signup', true);
-
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed up successfully
-          const user = userCredential.user;
-
-          // Save user data to database
-          return saveUserData(user.uid, name, email, role);
-        })
-        .then(() => {
-          showNotification('Account created successfully! Welcome to Gramik Digital Pathshala.', 'success');
-
-          // Redirect to dashboard after successful signup
-          setTimeout(() => {
-            // In a real app, redirect to dashboard
-            // window.location.href = 'dashboard.html';
-            console.log('Redirecting to dashboard...');
-          }, 1500);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-
-          if (errorCode === 'auth/email-already-in-use') {
-            showNotification('This email is already registered. Please log in.', 'error');
-          } else if (errorCode === 'auth/weak-password') {
-            showNotification('Password is too weak. Please choose a stronger password.', 'error');
-          } else if (errorCode === 'auth/invalid-email') {
-            showNotification('Invalid email address. Please check your email.', 'error');
-          } else {
-            showNotification('Signup failed: ' + errorMessage, 'error');
-          }
-        })
-        .finally(() => {
-          toggleLoading('signup', false);
+            // Toggle eye icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
         });
-    });
 
-    // Google Authentication
-    googleLoginBtn.addEventListener('click', () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-
-      // Determine which role is selected based on active form
-      const roleElement = loginForm.classList.contains('hidden') ?
-        document.getElementById('signup-role') : document.getElementById('login-role');
-      const role = roleElement.value;
-
-      if (!role) {
-        showNotification('Please select your role before signing in with Google', 'error');
-        return;
-      }
-
-      auth.signInWithPopup(provider)
-        .then((result) => {
-          // This gives you a Google Access Token
-          const credential = result.credential;
-          const token = credential.accessToken;
-
-          // The signed-in user info
-          const user = result.user;
-
-          // Check if this is a new user
-          if (result.additionalUserInfo.isNewUser) {
-            // Save user data to database
-            return saveUserData(user.uid, user.displayName, user.email, role);
-          } else {
-            // User already exists, just sign them in
-            showNotification(`Welcome back, ${user.displayName}!`, 'success');
-          }
-        })
-        .then(() => {
-          showNotification('Google authentication successful!', 'success');
-
-          // Redirect to dashboard
-          setTimeout(() => {
-            // In a real app, redirect to dashboard
-            // window.location.href = 'dashboard.html';
-            console.log('Redirecting to dashboard...');
-          }, 1500);
-        })
-        .catch((error) => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
-
-          showNotification('Google authentication failed: ' + errorMessage, 'error');
+        // Forgot password functionality
+        document.getElementById('forgot-password-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('email-form').style.display = 'none';
+            document.getElementById('reset-password-section').classList.add('active');
         });
-    });
 
-    // Phone Authentication (Placeholder)
-    phoneLoginBtn.addEventListener('click', () => {
-      showNotification('Phone authentication requires additional setup. Please use email or Google authentication for now.', 'error');
-    });
+        // Back to login from reset password
+        document.getElementById('back-to-login').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('reset-password-section').classList.remove('active');
+            document.getElementById('email-form').style.display = 'block';
+        });
 
-    // Dark Mode Toggle
-    darkModeToggle.addEventListener('click', () => {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-        darkModeToggle.innerHTML = '<span class="material-symbols-outlined">light_mode</span>';
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-        darkModeToggle.innerHTML = '<span class="material-symbols-outlined">dark_mode</span>';
-      }
-    });
+        // Display message function
+        function displayMessage(message, type) {
+            const messageContainer = document.getElementById('message-container');
+            messageContainer.innerHTML = `<div class="message ${type}">${message}</div>`;
 
-    // Check for saved theme preference
-    if (localStorage.getItem('theme') === 'dark') {
-      document.documentElement.classList.add('dark');
-      darkModeToggle.innerHTML = '<span class="material-symbols-outlined">light_mode</span>';
-    }
+            // Auto remove message after 5 seconds
+            setTimeout(() => {
+                messageContainer.innerHTML = '';
+            }, 5000);
+        }
 
-    // Monitor authentication state
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        // User is signed in
-        console.log('User is signed in:', user);
-      } else {
-        // User is signed out
-        console.log('User is signed out');
-      }
-    });
-  </script>
+        // Email login form submission
+        document.getElementById('email-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Sign in with email and password
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in successfully
+                    const user = userCredential.user;
+                    displayMessage('Login successful! Welcome back.', 'success');
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        // In a real app, you would redirect to the user's dashboard
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    // Handle errors
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    if (errorCode === 'auth/user-not-found') {
+                        displayMessage('No account found with this email. Please check your email or register.', 'error');
+                    } else if (errorCode === 'auth/wrong-password') {
+                        displayMessage('Incorrect password. Please try again.', 'error');
+                    } else if (errorCode === 'auth/invalid-email') {
+                        displayMessage('Invalid email address. Please check your email and try again.', 'error');
+                    } else {
+                        displayMessage('Login failed: ' + errorMessage, 'error');
+                    }
+                });
+        });
+
+        // Send password reset email
+        document.getElementById('send-reset-link').addEventListener('click', function () {
+            const email = document.getElementById('reset-email').value;
+
+            if (!email) {
+                displayMessage('Please enter your email address.', 'error');
+                return;
+            }
+
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    displayMessage('Password reset email sent! Check your inbox.', 'success');
+
+                    // Hide reset section and show login form after a delay
+                    setTimeout(() => {
+                        document.getElementById('reset-password-section').classList.remove('active');
+                        document.getElementById('email-form').style.display = 'block';
+                        document.getElementById('reset-email').value = '';
+                    }, 3000);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+
+                    if (errorCode === 'auth/user-not-found') {
+                        displayMessage('No account found with this email address.', 'error');
+                    } else {
+                        displayMessage('Error sending reset email: ' + error.message, 'error');
+                    }
+                });
+        });
+
+        // Phone login (simplified for demo)
+        document.getElementById('phone-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            displayMessage('Phone authentication requires additional setup. Please use email login for this demo.', 'error');
+        });
+
+        // Google authentication
+        document.getElementById('google-login-btn').addEventListener('click', function () {
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // This gives you a Google Access Token
+                    const credential = result.credential;
+                    const token = credential.accessToken;
+
+                    // The signed-in user info
+                    const user = result.user;
+
+                    displayMessage('Google authentication successful! Welcome back.', 'success');
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        // In a real app, redirect to dashboard
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    displayMessage('Google authentication failed: ' + errorMessage, 'error');
+                });
+        });
+
+        // Monitor authentication state
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                console.log('User is signed in:', user);
+            } else {
+                // User is signed out
+                console.log('User is signed out');
+            }
+        });
+    </script>
 </body>
 
 </html>
