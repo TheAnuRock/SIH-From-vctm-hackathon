@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramik Digital Pathshala - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #c0d3e3 0%, #b1bac9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-panel h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .left-panel p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            list-style: none;
+        }
+
+        .features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .features i {
+            margin-right: 10px;
+            color: #4cd964;
+        }
+
+        .right-panel {
+            flex: 1.2;
+            background: white;
+            padding: 40px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h2 {
+            color: #333;
+            font-size: 2rem;
+        }
+
+        .logo span {
+            color: #c0d3e3;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #777;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #c7bcd4;
+            border-bottom: 3px solid #c0d3e3;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #6a11cb;
+            outline: none;
+        }
+
+        .oauth-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .oauth-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .oauth-btn:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .google-btn {
+            color: #db4437;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #777;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #555;
+        }
+
+        .register-link a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+
+        .reset-section {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .reset-section.active {
+            display: block;
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-to-login a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-to-login a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                display: none;
+            }
+
+            .oauth-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>Welcome Back!</h1>
+            <p>Sign in to continue your learning journey, access your courses, and connect with your community.</p>
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> Resume your learning progress</li>
+                <li><i class="fas fa-check-circle"></i> Access your personalized dashboard</li>
+                <li><i class="fas fa-check-circle"></i> Connect with your mentors and peers</li>
+                <li><i class="fas fa-check-circle"></i> Track your achievements</li>
+            </ul>
+        </div>
+
+        <div class="right-panel">
+            <div class="logo">
+                <h2>Gramik<span>Digital Pathshala</span></h2>
+                <p>Sign in to your account</p>
+            </div>
+
+            <div id="message-container"></div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="email">Email</div>
+                <div class="tab" data-tab="phone">Phone</div>
+                <div class="tab" data-tab="google">Google</div>
+            </div>
+
+            <!-- Email Login Form -->
+            <div class="tab-content active" id="email-tab">
+                <form id="email-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-toggle">
+                            <input type="password" id="password" name="password" required>
+                            <i class="fas fa-eye" id="toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#" id="forgot-password-link">Forgot your password?</a>
+                    </div>
+
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+
+                <div class="reset-section" id="reset-password-section">
+                    <h3>Reset Your Password</h3>
+                    <p>Enter your email address and we'll send you a link to reset your password.</p>
+
+                    <div class="form-group">
+                        <label for="reset-email">Email Address</label>
+                        <input type="email" id="reset-email" name="reset-email" required>
+                    </div>
+
+                    <button type="button" class="btn" id="send-reset-link">Send Reset Link</button>
+                    <div class="back-to-login">
+                        <a href="#" id="back-to-login">Back to login</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone Login Form -->
+            <div class="tab-content" id="phone-tab">
+                <form id="phone-form">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="phone-input">
+                            <select id="country-code" name="country-code">
+                                <option value="+91" selected>+91 (IN)</option>
+                            </select>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Send Verification Code</button>
+
+                    <div class="verification-section" id="phone-verification">
+                        <div class="form-group">
+                            <label for="verification-code">Verification Code</label>
+                            <input type="text" id="verification-code" name="verification-code" required>
+                        </div>
+                        <button type="button" class="btn" id="verify-phone-btn">Verify Code</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Google Login -->
+            <div class="tab-content" id="google-tab">
+                <div class="oauth-buttons">
+                    <button type="button" class="oauth-btn google-btn" id="google-login-btn">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </div>
+
+                <p style="text-align: center; margin-top: 20px; color: #777;">
+                    You will be redirected to Google to complete your authentication.
+                </p>
+            </div>
+
+            <div class="register-link">
+                Don't have an account? <a href="regitrationpage.html">Register now</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCs6RK2HbbpR3lWXy64dPvvSIUGtLyVM0Y",
+            authDomain: "learningpath-c6733.firebaseapp.com",
+            databaseURL: "https://learningpath-c6733-default-rtdb.firebaseio.com",
+            projectId: "learningpath-c6733",
+            storageBucket: "learningpath-c6733.firebasestorage.app",
+            messagingSenderId: "372727572304",
+            appId: "1:372727572304:web:7beb4ec9e06d7959bc6e55",
+            measurementId: "G-YF3K4G82F6"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab
+                tab.classList.add('active');
+
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Toggle password visibility
+        document.getElementById('toggle-password').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Toggle eye icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Forgot password functionality
+        document.getElementById('forgot-password-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('email-form').style.display = 'none';
+            document.getElementById('reset-password-section').classList.add('active');
+        });
+
+        // Back to login from reset password
+        document.getElementById('back-to-login').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('reset-password-section').classList.remove('active');
+            document.getElementById('email-form').style.display = 'block';
+        });
+
+        // Display message function
+        function displayMessage(message, type) {
+            const messageContainer = document.getElementById('message-container');
+            messageContainer.innerHTML = `<div class="message ${type}">${message}</div>`;
+
+            // Auto remove message after 5 seconds
+            setTimeout(() => {
+                messageContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Email login form submission
+        document.getElementById('email-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Sign in with email and password
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in successfully
+                    const user = userCredential.user;
+                    displayMessage('Login successful! Welcome back.', 'success');
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        // In a real app, you would redirect to the user's dashboard
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    // Handle errors
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    if (errorCode === 'auth/user-not-found') {
+                        displayMessage('No account found with this email. Please check your email or register.', 'error');
+                    } else if (errorCode === 'auth/wrong-password') {
+                        displayMessage('Incorrect password. Please try again.', 'error');
+                    } else if (errorCode === 'auth/invalid-email') {
+                        displayMessage('Invalid email address. Please check your email and try again.', 'error');
+                    } else {
+                        displayMessage('Login failed: ' + errorMessage, 'error');
+                    }
+                });
+        });
+
+        // Send password reset email
+        document.getElementById('send-reset-link').addEventListener('click', function () {
+            const email = document.getElementById('reset-email').value;
+
+            if (!email) {
+                displayMessage('Please enter your email address.', 'error');
+                return;
+            }
+
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    displayMessage('Password reset email sent! Check your inbox.', 'success');
+
+                    // Hide reset section and show login form after a delay
+                    setTimeout(() => {
+                        document.getElementById('reset-password-section').classList.remove('active');
+                        document.getElementById('email-form').style.display = 'block';
+                        document.getElementById('reset-email').value = '';
+                    }, 3000);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+
+                    if (errorCode === 'auth/user-not-found') {
+                        displayMessage('No account found with this email address.', 'error');
+                    } else {
+                        displayMessage('Error sending reset email: ' + error.message, 'error');
+                    }
+                });
+        });
+
+        // Phone login (simplified for demo)
+        document.getElementById('phone-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            displayMessage('Phone authentication requires additional setup. Please use email login for this demo.', 'error');
+        });
+
+        // Google authentication
+        document.getElementById('google-login-btn').addEventListener('click', function () {
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // This gives you a Google Access Token
+                    const credential = result.credential;
+                    const token = credential.accessToken;
+
+                    // The signed-in user info
+                    const user = result.user;
+
+                    displayMessage('Google authentication successful! Welcome back.', 'success');
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        // In a real app, redirect to dashboard
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    displayMessage('Google authentication failed: ' + errorMessage, 'error');
+                });
+        });
+
+        // Monitor authentication state
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                console.log('User is signed in:', user);
+            } else {
+                // User is signed out
+                console.log('User is signed out');
+            }
+        });
+    </script>
+</body>
+
+</html>
