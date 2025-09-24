@@ -9,6 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <link rel="icon" type="image/png" href="icon.png" />
     <style>
         * {
             margin: 0;
@@ -83,13 +84,21 @@
             margin-bottom: 30px;
         }
 
+        .logo img {
+            width: 120px;
+            /* Adjust size as needed */
+            height: 120px;
+            /* Adjust size as needed */
+            flex-shrink: 0;
+        }
+
         .logo h2 {
             color: #333;
             font-size: 2rem;
         }
 
         .logo span {
-            color:  #c0d3e3;
+            color: #c0d3e3;
         }
 
         .tabs {
@@ -109,7 +118,7 @@
 
         .tab.active {
             color: #c7bcd4;
-            border-bottom: 3px solid  #c0d3e3 ;
+            border-bottom: 3px solid #c0d3e3;
         }
 
         .tab-content {
@@ -394,6 +403,7 @@
 
         <div class="right-panel">
             <div class="logo">
+                <img src="icon.png" alt="Gramik Pathshala" />
                 <h2>Gramik<span>Digital Pathshala</span></h2>
                 <p>Create your account</p>
             </div>
@@ -496,9 +506,9 @@
                         <label for="phone">Phone Number</label>
                         <div class="phone-input">
                             <select id="country-code" name="country-code">
-                                
+
                                 <option value="+91" selected>+91 (IN)</option>
-                                
+
                             </select>
                             <input type="tel" id="phone" name="phone" required>
                         </div>
@@ -555,7 +565,7 @@
             </div>
 
             <div class="login-link">
-                Already have an account? <a href="loginpage.html" >Log in</a>
+                Already have an account? <a href="loginpage.html">Log in</a>
             </div>
         </div>
     </div>
