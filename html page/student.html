@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | Gramik Digital Pathshala</title>
+    <link rel="stylesheet" href="/css page/student.css">
+    <link rel="javascript" href="/script/student.js">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo"><i class="fas fa-graduation-cap"></i> Gramik Digital Pathshala</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="student-portal.html" class="active">Student Portal</a></li>
+                    <li><a href="login.html" class="cta-button">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Student Hero Section -->
+    <section class="student-hero">
+        <div class="container">
+            <h1>Student Learning Portal</h1>
+            <p>Welcome back, Rohan Sharma! Continue your learning journey with personalized courses and resources.</p>
+            <a href="#courses" class="btn">Continue Learning</a>
+        </div>
+    </section>
+
+    <!-- Portal Content -->
+    <div class="container portal-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-book-open"></i> My Courses</a></li>
+                <li><a href="#"><i class="fas fa-tasks"></i> Assignments</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Progress</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                <li><a href="#"><i class="fas fa-file-invoice"></i> Resources</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Stats -->
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <i class="fas fa-book"></i>
+                    <h3>Enrolled Courses</h3>
+                    <p>5</p>
+                </div>
+                <div class="dashboard-card">
+                    <i class="fas fa-tasks"></i>
+                    <h3>Pending Assignments</h3>
+                    <p>3</p>
+                </div>
+                <div class="dashboard-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Overall Progress</h3>
+                    <p>72%</p>
+                </div>
+                <div class="dashboard-card">
+                    <i class="fas fa-award"></i>
+                    <h3>Certificates</h3>
+                    <p>2</p>
+                </div>
+            </div>
+
+            <!-- My Courses Section -->
+            <div class="content-section">
+                <h2 class="section-title">My Courses</h2>
+                <div class="course-list">
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3>Mathematics Fundamentals</h3>
+                            <p>Master the basics of algebra, geometry, and arithmetic</p>
+                            <div class="course-progress">
+                                <div class="progress-bar" style="width: 85%;"></div>
+                            </div>
+                            <div class="course-meta">
+                                <span>85% Complete</span>
+                                <span>12/15 Lessons</span>
+                            </div>
+                            <a href="#" class="btn" style="width: 100%; margin-top: 10px;">Continue</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3>Science Explorers</h3>
+                            <p>Discover the wonders of physics, chemistry, and biology</p>
+                            <div class="course-progress">
+                                <div class="progress-bar" style="width: 60%;"></div>
+                            </div>
+                            <div class="course-meta">
+                                <span>60% Complete</span>
+                                <span>9/15 Lessons</span>
+                            </div>
+                            <a href="#" class="btn" style="width: 100%; margin-top: 10px;">Continue</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3>Language & Literature</h3>
+                            <p>Improve your language skills and explore literature</p>
+                            <div class="course-progress">
+                                <div class="progress-bar" style="width: 45%;"></div>
+                            </div>
+                            <div class="course-meta">
+                                <span>45% Complete</span>
+                                <span>7/15 Lessons</span>
+                            </div>
+                            <a href="#" class="btn" style="width: 100%; margin-top: 10px;">Continue</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Assignments -->
+            <div class="content-section">
+                <h2 class="section-title">Upcoming Assignments</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Assignment</th>
+                            <th>Course</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Algebra Problem Set</td>
+                            <td>Mathematics Fundamentals</td>
+                            <td>Oct 15, 2023</td>
+                            <td><span class="badge badge-warning">Pending</span></td>
+                            <td><a href="#" class="btn">Submit</a></td>
+                        </tr>
+                        <tr>
+                            <td>Physics Lab Report</td>
+                            <td>Science Explorers</td>
+                            <td>Oct 18, 2023</td>
+                            <td><span class="badge badge-info">In Progress</span></td>
+                            <td><a href="#" class="btn">Continue</a></td>
+                        </tr>
+                        <tr>
+                            <td>Essay on Modern Poetry</td>
+                            <td>Language & Literature</td>
+                            <td>Oct 20, 2023</td>
+                            <td><span class="badge badge-warning">Pending</span></td>
+                            <td><a href="#" class="btn">Start</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Registration/Login Modal -->
+    <div id="auth-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background-color: white; padding: 2rem; border-radius: 10px; width: 90%; max-width: 500px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="margin: 0;">Student Portal Access</h2>
+                <button onclick="closeAuthModal()"
+                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+            </div>
+
+            <div id="login-form" class="auth-form active">
+                <form id="student-login">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Login</button>
+                    </div>
+                    <p style="text-align: center;">Don't have an account? <a href="#"
+                            onclick="switchAuthTab('register')">Register here</a></p>
+                </form>
+            </div>
+
+            <div id="register-form" class="auth-form">
+                <form id="student-registration">
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <input type="text" id="reg-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input type="tel" id="reg-phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-dob">Date of Birth</label>
+                        <input type="date" id="reg-dob" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-grade">Grade/Class</label>
+                        <select id="reg-grade" class="form-control" required>
+                            <option value="">Select Grade</option>
+                            <option value="6">Grade 6</option>
+                            <option value="7">Grade 7</option>
+                            <option value="8">Grade 8</option>
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-school">School Name</label>
+                        <input type="text" id="reg-school" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm-password">Confirm Password</label>
+                        <input type="password" id="reg-confirm-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Register</button>
+                    </div>
+                    <p style="text-align: center;">Already have an account? <a href="#"
+                            onclick="switchAuthTab('login')">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Gramik Digital Pathshala. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <script src="/script/student.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramik Digital Pathshala </title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="javascript" href="/script/index.js">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="icon.png" />
+    
+</head>
+
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="#" class="logo"> <span data-i18n="website_title">Gramik
+                    Digital Pathshala</span></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home" data-i18n="nav_home">Home</a></li>
+                    <li><a href="#courses" data-i18n="nav_courses">Courses</a></li>
+                    <li><a href="#roles" data-i18n="nav_roles">For You</a></li>
+                    <li><a href="#mentor" data-i18n="nav_mentor">AI Mentor</a></li>
+                    <li><a href="#about" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="login.html" class="cta-button" data-i18n="nav_join">Join Now</a></li>
+                </ul>
+            </nav>
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="pa">Punjabi</option>
+            </select>
+        </div>
+    </header>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 data-i18n="hero_heading">Empowering Education, One Step at a Time</h1>
+                <p data-i18n="hero_subheading">Welcome to Gramik Digital Pathshala, your all-in-one platform for quality
+                    courses and smart learning. Step into the world of knowledge and unlock your full potential.</p>
+                <a href="#courses" class="cta-button" data-i18n="explore_button">Explore Courses <i
+                        class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container intro-section">
+                <div class="intro-image">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
+                        alt="Introduction to Gramik Digital Pathshala">
+                </div>
+                <div class="intro-text">
+                    <h2 data-i18n="intro_title">What is Gramik Digital Pathshala?</h2>
+                    <p data-i18n="intro_para1">Gramik Digital Pathshala is an online platform designed to help students
+                        grow with enthusiasm and a clear understanding of their subjects. Our mission is to provide
+                        every child with a world-class learning experience right from their home.</p>
+                    <p data-i18n="intro_para2">On our website, you can achieve your dreams through interactive lessons,
+                        live classes, and continuous support. This is your personal learning ecosystem, built for your
+                        success.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="roles" class="section role-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="roles_title">Designed For Everyone</h2>
+                <div class="role-cards">
+                    <div class="role-card student-card">
+                        <i class="fas fa-user-graduate role-icon"></i>
+                        <h3 data-i18n="student_title">For Students</h3>
+                        <p data-i18n="student_desc">Access personalized learning paths, interactive content, and
+                            progress tracking.</p>
+                        <ul class="role-features">
+                            <li data-i18n="student_feature1">Interactive lessons and quizzes</li>
+                            <li data-i18n="student_feature2">Personalized learning dashboard</li>
+                            <li data-i18n="student_feature3">Progress tracking and analytics</li>
+                            <li data-i18n="student_feature4">24/7 access to learning materials</li>
+                        </ul>
+                        <a href="student-login.html" class="role-button" data-i18n="student_button">Student Portal</a>
+                    </div>
+
+                    <div class="role-card teacher-card">
+                        <i class="fas fa-chalkboard-teacher role-icon"></i>
+                        <h3 data-i18n="teacher_title">For Teachers</h3>
+                        <p data-i18n="teacher_desc">Create engaging content, track student progress, and manage your
+                            classes.</p>
+                        <ul class="role-features">
+                            <li data-i18n="teacher_feature1">Course creation tools</li>
+                            <li data-i18n="teacher_feature2">Student progress monitoring</li>
+                            <li data-i18n="teacher_feature3">Assignment and grading system</li>
+                            <li data-i18n="teacher_feature4">Communication tools</li>
+                        </ul>
+                        <a href="teacher-login.html" class="role-button" data-i18n="teacher_button">Teacher Portal</a>
+                    </div>
+
+                    <div class="role-card mentor-card">
+                        <i class="fas fa-hands-helping role-icon"></i>
+                        <h3 data-i18n="mentor_title">For Mentors</h3>
+                        <p data-i18n="mentor_desc">Guide students, provide feedback, and help them achieve their
+                            academic goals.</p>
+                        <ul class="role-features">
+                            <li data-i18n="mentor_feature1">Student mentoring dashboard</li>
+                            <li data-i18n="mentor_feature2">Progress review tools</li>
+                            <li data-i18n="mentor_feature3">Personalized feedback system</li>
+                            <li data-i18n="mentor_feature4">Goal setting and tracking</li>
+                        </ul>
+                        <a href="mentor-login.html" class="role-button" data-i18n="mentor_button">Mentor Portal</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="courses" class="section courses-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="courses_title">Popular Courses</h2>
+                <div class="course-cards">
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3 data-i18n="course1_title">Mathematics Fundamentals</h3>
+                            <p data-i18n="course1_desc">Master the basics of algebra, geometry, and arithmetic with
+                                interactive lessons.</p>
+                            <div class="course-meta">
+                                <span><i class="fas fa-clock"></i> 40 hours</span>
+                                <span><i class="fas fa-user"></i> Beginner</span>
+                            </div>
+                            <a href="#" class="course-button" data-i18n="course_button">Enroll Now</a>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3 data-i18n="course2_title">Science Explorers</h3>
+                            <p data-i18n="course2_desc">Discover the wonders of physics, chemistry, and biology through
+                                experiments.</p>
+                            <div class="course-meta">
+                                <span><i class="fas fa-clock"></i> 50 hours</span>
+                                <span><i class="fas fa-user"></i> Intermediate</span>
+                            </div>
+                            <a href="#" class="course-button" data-i18n="course_button">Enroll Now</a>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3 data-i18n="course3_title">Language & Literature</h3>
+                            <p data-i18n="course3_desc">Improve your language skills and explore classic and
+                                contemporary literature.</p>
+                            <div class="course-meta">
+                                <span><i class="fas fa-clock"></i> 45 hours</span>
+                                <span><i class="fas fa-user"></i> All Levels</span>
+                            </div>
+                            <a href="#" class="course-button" data-i18n="course_button">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mentor" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="mentor_title">Meet Our AI Mentor: Gemini</h2>
+                <div class="chat-container">
+                    <div class="chat-header" data-i18n="chat_header">Ask Gemini anything!</div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="gemini-message" data-i18n="chat_welcome">Hello! I'm Gemini, your AI learning
+                            assistant. How can I help you with your studies today?</div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="user-input" placeholder="Type your question..."
+                            data-i18n-placeholder="chat_placeholder">
+                        <button class="chat-send-button" id="send-button" data-i18n="chat_send_button">Ask</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="about_title">Our Story</h2>
+                <div class="about-content">
+                    <p data-i18n="about_para1">Gramik Digital Pathshala is not just a platform, but a vision to provide
+                        excellent and accessible education to every child. We want to build a community where learning
+                        is not confined to books, but becomes an interesting and interactive experience.</p>
+                    <p data-i18n="about_para2">Our team includes experienced educators, modern technology experts, and
+                        passionate individuals who are committed to lighting up your child's future. Our goal is for
+                        every student to reach their full potential.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p data-i18n="footer_text">&copy; 2025 Gramik Digital Pathshala. All Rights Reserved. Designed with <i
+                    class="fas fa-heart" style="color: #e74c3c;"></i> for Future Leaders.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+
+</html>

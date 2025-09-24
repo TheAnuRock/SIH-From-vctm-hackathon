@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal | Gramik Digital Pathshala</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css page/teacher.css">
+    <link rel="javascript" href="/script/teacher.js">
+    <link rel="icon" type="image/png" href="icon.png" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo"><i class="fas fa-graduation-cap"></i> Gramik Digital Pathshala</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="teacher-portal.html" class="active">Teacher Portal</a></li>
+                    <li><a href="login.html" class="cta-button">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Teacher Hero Section -->
+    <section class="teacher-hero">
+        <div class="container">
+            <h1>Teacher Dashboard</h1>
+            <p>Welcome back, Dr. Priya Sharma! Manage your courses, students, and teaching materials all in one place.
+            </p>
+            <a href="#courses" class="btn">Manage Courses</a>
+        </div>
+    </section>
+
+    <!-- Portal Content -->
+    <div class="container portal-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" onclick="showSection('my-courses')"><i class="fas fa-book-open"></i> My Courses</a></li>
+                <li><a href="#" onclick="showSection('students')"><i class="fas fa-users"></i> Students</a></li>
+                <li><a href="#" onclick="showSection('assignments')"><i class="fas fa-tasks"></i> Assignments</a></li>
+                <li><a href="#" onclick="showSection('grades')"><i class="fas fa-chart-bar"></i> Grades</a></li>
+                <li><a href="#" onclick="showSection('resources')"><i class="fas fa-file-alt"></i> Resources</a></li>
+                <li><a href="#" onclick="showSection('announcements')"><i class="fas fa-bullhorn"></i> Announcements</a>
+                </li>
+                <li><a href="#" onclick="showSection('calendar')"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="#" onclick="showSection('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Stats -->
+            <div id="dashboard" class="content-section active-section">
+                <h2 class="section-title">Teaching Overview</h2>
+                <div class="dashboard-cards">
+                    <div class="dashboard-card">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>Active Courses</h3>
+                        <p>4</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Total Students</h3>
+                        <p>87</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Assignments to Grade</h3>
+                        <p>12</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fas fa-comments"></i>
+                        <h3>Unread Messages</h3>
+                        <p>5</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">Recent Activity</h3>
+                    <div class="assignment-item">
+                        <div>
+                            <strong>Rohan Kumar</strong> submitted "Algebra Problem Set"
+                            <div style="font-size: 0.9rem; color: var(--secondary-color);">Mathematics Fundamentals • 2
+                                hours ago</div>
+                        </div>
+                        <button class="btn" onclick="openGradingModal()">Grade Now</button>
+                    </div>
+                    <div class="assignment-item">
+                        <div>
+                            <strong>Anjali Singh</strong> asked a question in "Science Explorers"
+                            <div style="font-size: 0.9rem; color: var(--secondary-color);">About chemical reactions • 5
+                                hours ago</div>
+                        </div>
+                        <button class="btn-outline">View</button>
+                    </div>
+                    <div class="assignment-item">
+                        <div>
+                            <strong>Class 9B</strong> has a test scheduled for tomorrow
+                            <div style="font-size: 0.9rem; color: var(--secondary-color);">Physics - Motion and Forces •
+                                1 day ago</div>
+                        </div>
+                        <button class="btn-outline">Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Courses Section -->
+            <div id="my-courses" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="section-title">My Courses</h2>
+                    <button class="btn" onclick="openCourseModal()"><i class="fas fa-plus"></i> Create New
+                        Course</button>
+                </div>
+                <div class="course-list">
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3>Mathematics Fundamentals</h3>
+                            <p>Grade 9-10 • Algebra, Geometry, Statistics</p>
+                            <div class="course-stats">
+                                <span><i class="fas fa-users"></i> 24 Students</span>
+                                <span><i class="fas fa-tasks"></i> 8 Assignments</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn" style="flex: 1;">Manage</button>
+                                <button class="btn-outline"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3>Science Explorers</h3>
+                            <p>Grade 8-9 • Physics, Chemistry, Biology</p>
+                            <div class="course-stats">
+                                <span><i class="fas fa-users"></i> 32 Students</span>
+                                <span><i class="fas fa-tasks"></i> 6 Assignments</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn" style="flex: 1;">Manage</button>
+                                <button class="btn-outline"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-image"
+                            style="background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        </div>
+                        <div class="course-content">
+                            <h3>Advanced Physics</h3>
+                            <p>Grade 11-12 • Mechanics, Thermodynamics, Optics</p>
+                            <div class="course-stats">
+                                <span><i class="fas fa-users"></i> 18 Students</span>
+                                <span><i class="fas fa-tasks"></i> 10 Assignments</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn" style="flex: 1;">Manage</button>
+                                <button class="btn-outline"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Section -->
+            <div id="students" class="content-section">
+                <h2 class="section-title">My Students</h2>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <select class="form-control" style="flex: 1;">
+                        <option>Filter by Course</option>
+                        <option>Mathematics Fundamentals</option>
+                        <option>Science Explorers</option>
+                        <option>Advanced Physics</option>
+                    </select>
+                    <input type="text" class="form-control" placeholder="Search students..." style="flex: 2;">
+                    <button class="btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Progress</th>
+                            <th>Last Activity</th>
+                            <th>Performance</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rohan Kumar</td>
+                            <td>Mathematics Fundamentals</td>
+                            <td>
+                                <div style="background-color: #e0e0e0; border-radius: 4px; height: 8px; width: 100%;">
+                                    <div
+                                        style="background-color: var(--teacher-color); height: 100%; width: 85%; border-radius: 4px;">
+                                    </div>
+                                </div>
+                                <small>85%</small>
+                            </td>
+                            <td>2 hours ago</td>
+                            <td><span class="badge badge-success">Excellent</span></td>
+                            <td><button class="btn-outline">View Profile</button></td>
+                        </tr>
+                        <tr>
+                            <td>Anjali Singh</td>
+                            <td>Science Explorers</td>
+                            <td>
+                                <div style="background-color: #e0e0e0; border-radius: 4px; height: 8px; width: 100%;">
+                                    <div
+                                        style="background-color: var(--teacher-color); height: 100%; width: 72%; border-radius: 4px;">
+                                    </div>
+                                </div>
+                                <small>72%</small>
+                            </td>
+                            <td>5 hours ago</td>
+                            <td><span class="badge badge-primary">Good</span></td>
+                            <td><button class="btn-outline">View Profile</button></td>
+                        </tr>
+                        <tr>
+                            <td>Vikram Patel</td>
+                            <td>Advanced Physics</td>
+                            <td>
+                                <div style="background-color: #e0e0e0; border-radius: 4px; height: 8px; width: 100%;">
+                                    <div
+                                        style="background-color: var(--teacher-color); height: 100%; width: 65%; border-radius: 4px;">
+                                    </div>
+                                </div>
+                                <small>65%</small>
+                            </td>
+                            <td>1 day ago</td>
+                            <td><span class="badge badge-warning">Needs Improvement</span></td>
+                            <td><button class="btn-outline">View Profile</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Assignments Section -->
+            <div id="assignments" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="section-title">Assignments</h2>
+                    <button class="btn" onclick="openAssignmentModal()"><i class="fas fa-plus"></i> Create
+                        Assignment</button>
+                </div>
+
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" onclick="openTab('pending-tab')">To Grade (12)</button>
+                        <button class="tab-button" onclick="openTab('graded-tab')">Graded (24)</button>
+                        <button class="tab-button" onclick="openTab('draft-tab')">Drafts (3)</button>
+                    </div>
+
+                    <div id="pending-tab" class="tab-content active">
+                        <div class="assignment-item">
+                            <div>
+                                <strong>Algebra Problem Set</strong>
+                                <div>Mathematics Fundamentals • Due: Oct 15, 2023</div>
+                                <div style="font-size: 0.9rem; color: var(--secondary-color);">8 submissions pending
+                                </div>
+                            </div>
+                            <button class="btn">Grade Submissions</button>
+                        </div>
+                        <div class="assignment-item">
+                            <div>
+                                <strong>Physics Lab Report</strong>
+                                <div>Science Explorers • Due: Oct 18, 2023</div>
+                                <div style="font-size: 0.9rem; color: var(--secondary-color);">4 submissions pending
+                                </div>
+                            </div>
+                            <button class="btn">Grade Submissions</button>
+                        </div>
+                    </div>
+
+                    <div id="graded-tab" class="tab-content">
+                        <p>Previously graded assignments will appear here.</p>
+                    </div>
+
+                    <div id="draft-tab" class="tab-content">
+                        <p>Draft assignments will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more sections for Grades, Resources, Announcements, Calendar, Settings as needed -->
+
+        </main>
+    </div>
+
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="margin: 0;">Teacher Portal Access</h2>
+                <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+            </div>
+
+            <div id="login-form" class="auth-form active">
+                <form id="teacher-login">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Login</button>
+                    </div>
+                    <p style="text-align: center;">Don't have an account? <a href="#"
+                            onclick="switchAuthTab('register')">Register here</a></p>
+                </form>
+            </div>
+
+            <div id="register-form" class="auth-form">
+                <form id="teacher-registration">
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <input type="text" id="reg-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input type="tel" id="reg-phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-subject">Subject Specialization</label>
+                        <select id="reg-subject" class="form-control" required>
+                            <option value="">Select Subject</option>
+                            <option value="math">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="english">English</option>
+                            <option value="social">Social Studies</option>
+                            <option value="computer">Computer Science</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-qualification">Highest Qualification</label>
+                        <input type="text" id="reg-qualification" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-experience">Years of Experience</label>
+                        <input type="number" id="reg-experience" class="form-control" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm-password">Confirm Password</label>
+                        <input type="password" id="reg-confirm-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Register</button>
+                    </div>
+                    <p style="text-align: center;">Already have an account? <a href="#"
+                            onclick="switchAuthTab('login')">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Creation Modal -->
+    <div id="course-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="margin: 0;">Create New Course</h2>
+                <button class="close-modal" onclick="closeCourseModal()">&times;</button>
+            </div>
+            <form id="course-creation">
+                <div class="form-group">
+                    <label for="course-title">Course Title</label>
+                    <input type="text" id="course-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="course-description">Course Description</label>
+                    <textarea id="course-description" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="course-subject">Subject</label>
+                    <select id="course-subject" class="form-control" required>
+                        <option value="">Select Subject</option>
+                        <option value="math">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="english">English</option>
+                        <option value="social">Social Studies</option>
+                        <option value="computer">Computer Science</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="course-grade">Target Grade Level</label>
+                    <select id="course-grade" class="form-control" required>
+                        <option value="">Select Grade</option>
+                        <option value="6">Grade 6</option>
+                        <option value="7">Grade 7</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn" style="width: 100%;">Create Course</button>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn" style="width: 100%;">Create Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Gramik Digital Pathshala. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script/teacher.js"></script>
+</body>
+
+</html>

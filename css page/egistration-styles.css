@@ -1,0 +1,378 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url(logobg.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.left-panel {
+    flex: 1;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left-panel h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.left-panel p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.features {
+    list-style: none;
+}
+
+.features li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.features i {
+    margin-right: 10px;
+    color: #4cd964;
+}
+
+.right-panel {
+    flex: 1.2;
+    background: white;
+    padding: 40px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo img {
+    width: 120px;
+    /* Adjust size as needed */
+    height: 120px;
+    /* Adjust size as needed */
+    flex-shrink: 0;
+}
+
+.logo h2 {
+    color: #333;
+    font-size: 2rem;
+}
+
+.logo span {
+    color: #c0d3e3;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #777;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.tab.active {
+    color: #c7bcd4;
+    border-bottom: 3px solid #c0d3e3;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border 0.3s;
+}
+
+input:focus,
+select:focus {
+    border-color: #6a11cb;
+    outline: none;
+}
+
+.role-selection {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.role-option {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.role-option:hover {
+    border-color: #6a11cb;
+}
+
+.role-option.selected {
+    border-color: #6a11cb;
+    background-color: rgba(106, 17, 203, 0.1);
+}
+
+.role-option i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #6a11cb;
+}
+
+.oauth-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.oauth-btn {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.oauth-btn:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.google-btn {
+    color: #db4437;
+}
+
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #eee;
+}
+
+.divider span {
+    background: white;
+    padding: 0 15px;
+    color: #777;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.terms {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+.terms a {
+    color: #6a11cb;
+    text-decoration: none;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    color: #555;
+}
+
+.login-link a {
+    color: #6a11cb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.phone-input {
+    display: flex;
+}
+
+.phone-input select {
+    width: 30%;
+    margin-right: 10px;
+}
+
+.phone-input input {
+    width: 70%;
+}
+
+.password-strength {
+    height: 5px;
+    background: #eee;
+    border-radius: 5px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: all 0.3s;
+}
+
+.weak {
+    background: #ff4757;
+    width: 33%;
+}
+
+.medium {
+    background: #ffa502;
+    width: 66%;
+}
+
+.strong {
+    background: #2ed573;
+    width: 100%;
+}
+
+.password-requirements {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #777;
+}
+
+.requirement {
+    margin-bottom: 5px;
+}
+
+.requirement.met {
+    color: #2ed573;
+}
+
+.verification-section {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.verification-section.active {
+    display: block;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        display: none;
+    }
+
+    .role-selection {
+        flex-direction: column;
+    }
+
+    .oauth-buttons {
+        flex-direction: column;
+    }
+}
+

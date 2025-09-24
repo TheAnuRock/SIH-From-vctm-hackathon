@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Portal | Gramik Digital Pathshala</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css page/mantor.css">
+    <link rel="javascript" href="js page/mantor.js">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="index.html" class="logo"><i class="fas fa-graduation-cap"></i> Gramik Digital Pathshala</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="mentor-portal.html" class="active">Mentor Portal</a></li>
+                    <li><a href="login.html" class="cta-button">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mentor Hero Section -->
+    <section class="mentor-hero">
+        <div class="container">
+            <h1>Mentor Dashboard</h1>
+            <p>Welcome back, Dr. Anil Kapoor! Guide your mentees towards academic success with personalized support.</p>
+            <a href="#mentees" class="btn">View My Mentees</a>
+        </div>
+    </section>
+
+    <!-- Portal Content -->
+    <div class="container portal-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" onclick="showSection('my-mentees')"><i class="fas fa-users"></i> My Mentees</a></li>
+                <li><a href="#" onclick="showSection('sessions')"><i class="fas fa-calendar-check"></i> Sessions</a></li>
+                <li><a href="#" onclick="showSection('goals')"><i class="fas fa-bullseye"></i> Goals & Progress</a></li>
+                <li><a href="#" onclick="showSection('resources')"><i class="fas fa-book"></i> Resources</a></li>
+                <li><a href="#" onclick="showSection('communication')"><i class="fas fa-comments"></i> Communication</a></li>
+                <li><a href="#" onclick="showSection('reports')"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="#" onclick="showSection('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Stats -->
+            <div id="dashboard" class="content-section active-section">
+                <h2 class="section-title">Mentoring Overview</h2>
+                <div class="dashboard-cards">
+                    <div class="dashboard-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Active Mentees</h3>
+                        <p>8</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Upcoming Sessions</h3>
+                        <p>5</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Pending Actions</h3>
+                        <p>7</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <i class="fas fa-star"></i>
+                        <h3>Avg. Satisfaction</h3>
+                        <p>4.8/5</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">Recent Activity</h3>
+                    <div class="session-item">
+                        <div>
+                            <strong>Session with Priya Sharma</strong>
+                            <div style="font-size: 0.9rem; color: var(--secondary-color);">Mathematics • Completed today • 45 mins</div>
+                            <div style="font-size: 0.9rem;">Focused on algebraic equations and problem-solving techniques</div>
+                        </div>
+                        <button class="btn-outline">View Notes</button>
+                    </div>
+                    <div class="session-item">
+                        <div>
+                            <strong>Progress Report: Rohan Kumar</strong>
+                            <div style="font-size: 0.9rem; color: var(--secondary-color);">Science • Updated 2 days ago</div>
+                            <div style="font-size: 0.9rem;">Showed 15% improvement in physics test scores</div>
+                        </div>
+                        <button class="btn-outline">View Details</button>
+                    </div>
+                    <div class="session-item">
+                        <div>
+                            <strong>New goal set for Anjali Singh</strong>
+                            <div style="font-size: 0.9rem; color: var(--secondary-color);">Language Skills • Created 3 days ago</div>
+                            <div style="font-size: 0.9rem;">Target: Improve essay writing skills by next assessment</div>
+                        </div>
+                        <button class="btn-outline">Track Progress</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Mentees Section -->
+            <div id="my-mentees" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="section-title">My Mentees</h2>
+                    <button class="btn" onclick="openAddMenteeModal()"><i class="fas fa-plus"></i> Add New Mentee</button>
+                </div>
+                <div class="mentee-list">
+                    <div class="mentee-card">
+                        <div class="mentee-header">
+                            <div class="mentee-avatar">PS</div>
+                            <div class="mentee-info">
+                                <h3>Priya Sharma</h3>
+                                <p>Grade 10 • Mathematics</p>
+                            </div>
+                        </div>
+                        <div class="mentee-content">
+                            <div class="progress-section">
+                                <div class="progress-label">
+                                    <span>Academic Progress</span>
+                                    <span>78%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 78%;"></div>
+                                </div>
+                            </div>
+                            <div class="mentee-stats">
+                                <span><i class="fas fa-calendar"></i> 12 Sessions</span>
+                                <span><i class="fas fa-bullseye"></i> 3/5 Goals</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn" style="flex: 1;" onclick="openMenteeDetail('Priya Sharma')">View Profile</button>
+                                <button class="btn-outline"><i class="fas fa-comment"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mentee-card">
+                        <div class="mentee-header">
+                            <div class="mentee-avatar">RK</div>
+                            <div class="mentee-info">
+                                <h3>Rohan Kumar</h3>
+                                <p>Grade 9 • Science</p>
+                            </div>
+                        </div>
+                        <div class="mentee-content">
+                            <div class="progress-section">
+                                <div class="progress-label">
+                                    <span>Academic Progress</span>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <div class="mentee-stats">
+                                <span><i class="fas fa-calendar"></i> 8 Sessions</span>
+                                <span><i class="fas fa-bullseye"></i> 2/4 Goals</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn" style="flex: 1;" onclick="openMenteeDetail('Rohan Kumar')">View Profile</button>
+                                <button class="btn-outline"><i class="fas fa-comment"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mentee-card">
+                        <div class="mentee-header">
+                            <div class="mentee-avatar">AS</div>
+                            <div class="mentee-info">
+                                <h3>Anjali Singh</h3>
+                                <p>Grade 11 • Language Arts</p>
+                            </div>
+                        </div>
+                        <div class="mentee-content">
+                            <div class="progress-section">
+                                <div class="progress-label">
+                                    <span>Academic Progress</span>
+                                    <span>82%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 82%;"></div>
+                                </div>
+                            </div>
+                            <div class="mentee-stats">
+                                <span><i class="fas fa-calendar"></i> 15 Sessions</span>
+                                <span><i class="fas fa-bullseye"></i> 4/5 Goals</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn" style="flex: 1;" onclick="openMenteeDetail('Anjali Singh')">View Profile</button>
+                                <button class="btn-outline"><i class="fas fa-comment"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sessions Section -->
+            <div id="sessions" class="content-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="section-title">Mentoring Sessions</h2>
+                    <button class="btn" onclick="openSessionModal()"><i class="fas fa-plus"></i> Schedule Session</button>
+                </div>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" onclick="openTab('upcoming-tab')">Upcoming (5)</button>
+                        <button class="tab-button" onclick="openTab('past-tab')">Past Sessions</button>
+                        <button class="tab-button" onclick="openTab('requested-tab')">Requested (2)</button>
+                    </div>
+                    
+                    <div id="upcoming-tab" class="tab-content active">
+                        <div class="session-item">
+                            <div>
+                                <strong>Weekly Check-in: Priya Sharma</strong>
+                                <div>Mathematics • Algebraic Expressions</div>
+                                <div style="font-size: 0.9rem; color: var(--secondary-color);">Tomorrow, 4:00 PM - 5:00 PM</div>
+                            </div>
+                            <div>
+                                <button class="btn-outline" style="margin-right: 0.5rem;">Reschedule</button>
+                                <button class="btn">Start Session</button>
+                            </div>
+                        </div>
+                        <div class="session-item">
+                            <div>
+                                <strong>Goal Review: Rohan Kumar</strong>
+                                <div>Science • Physics Concepts</div>
+                                <div style="font-size: 0.9rem; color: var(--secondary-color);">Oct 18, 2023 • 3:00 PM - 4:00 PM</div>
+                            </div>
+                            <div>
+                                <button class="btn-outline" style="margin-right: 0.5rem;">Reschedule</button>
+                                <button class="btn">Prepare</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="past-tab" class="tab-content">
+                        <p>Past mentoring sessions will appear here.</p>
+                    </div>
+                    
+                    <div id="requested-tab" class="tab-content">
+                        <div class="session-item">
+                            <div>
+                                <strong>Requested: Vikram Patel</strong>
+                                <div>Chemistry Help • Chemical Reactions</div>
+                                <div style="font-size: 0.9rem; color: var(--secondary-color);">Requested: Today, 10:30 AM</div>
+                            </div>
+                            <div>
+                                <button class="btn-outline" style="margin-right: 0.5rem;">Decline</button>
+                                <button class="btn">Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals & Progress Section -->
+            <div id="goals" class="content-section">
+                <h2 class="section-title">Goals & Progress Tracking</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" onclick="openTab('active-goals')">Active Goals</button>
+                        <button class="tab-button" onclick="openTab('completed-goals')">Completed</button>
+                        <button class="tab-button" onclick="openTab('new-goal')">Set New Goal</button>
+                    </div>
+                    
+                    <div id="active-goals" class="tab-content active">
+                        <div class="goal-item">
+                            <div class="goal-header">
+                                <strong>Improve Algebra Skills - Priya Sharma</strong>
+                                <span class="badge badge-warning">In Progress</span>
+                            </div>
+                            <div class="goal-progress">
+                                <div class="goal-progress-fill" style="width: 70%;"></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--secondary-color);">
+                                <span>Target: Score 90% on next algebra test</span>
+                                <span>70% Complete</span>
+                            </div>
+                            <div style="margin-top: 0.5rem;">
+                                <button class="btn-outline">Update Progress</button>
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-header">
+                                <strong>Enhance Essay Writing - Anjali Singh</strong>
+                                <span class="badge badge-primary">On Track</span>
+                            </div>
+                            <div class="goal-progress">
+                                <div class="goal-progress-fill" style="width: 50%;"></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--secondary-color);">
+                                <span>Target: Write 3 high-quality essays by month-end</span>
+                                <span>50% Complete</span>
+                            </div>
+                            <div style="margin-top: 0.5rem;">
+                                <button class="btn-outline">Update Progress</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="completed-goals" class="tab-content">
+                        <p>Completed goals will appear here.</p>
+                    </div>
+                    
+                    <div id="new-goal" class="tab-content">
+                        <form id="goal-form">
+                            <div class="form-group">
+                                <label for="goal-mentee">Select Mentee</label>
+                                <select id="goal-mentee" class="form-control" required>
+                                    <option value="">Choose a mentee</option>
+                                    <option value="priya">Priya Sharma</option>
+                                    <option value="rohan">Rohan Kumar</option>
+                                    <option value="anjali">Anjali Singh</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-title">Goal Title</label>
+                                <input type="text" id="goal-title" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-description">Goal Description</label>
+                                <textarea id="goal-description" class="form-control" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-deadline">Target Date</label>
+                                <input type="date" id="goal-deadline" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn" style="width: 100%;">Create Goal</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication Section -->
+            <div id="communication" class="content-section">
+                <h2 class="section-title">Communication</h2>
+                
+                <div class="chat-container">
+                    <div class="chat-header">
+                        Conversation with Priya Sharma
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message mentee">
+                            <div>Hello Dr. Kapoor, I'm having trouble understanding quadratic equations. Can we go over them in our next session?</div>
+                            <div style="font-size: 0.8rem; text-align: right; margin-top: 0.5rem;">10:24 AM</div>
+                        </div>
+                        <div class="message mentor">
+                            <div>Of course, Priya. I've added quadratic equations to our agenda for tomorrow's session. In the meantime, try working through problems 1-5 on page 142.</div>
+                            <div style="font-size: 0.8rem; text-align: right; margin-top: 0.5rem;">10:30 AM</div>
+                        </div>
+                        <div class="message mentee">
+                            <div>Thank you! I'll try those problems. I completed the algebra assignment and scored 85%.</div>
+                            <div style="font-size: 0.8rem; text-align: right; margin-top: 0.5rem;">11:15 AM</div>
+                        </div>
+                        <div class="message mentor">
+                            <div>That's excellent progress! Well done. We'll review any challenging questions tomorrow.</div>
+                            <div style="font-size: 0.8rem; text-align: right; margin-top: 0.5rem;">11:20 AM</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Type your message...">
+                        <button class="btn">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more sections for Resources, Reports, Settings as needed -->
+            
+        </main>
+    </div>
+
+   <!-- Authentication Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="margin: 0;">Mentor Portal Access</h2>
+                <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+            </div>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Register as Mentor</div>
+            </div>
+            
+            <div id="login-form" class="auth-form active">
+                <form id="mentor-login">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Login</button>
+                    </div>
+                    <p style="text-align: center;">Don't have an account? <a href="#" onclick="switchAuthTab('register')">Register here</a></p>
+                </form>
+            </div>
+            
+            <div id="register-form" class="auth-form">
+                <form id="mentor-registration">
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <input type="text" id="reg-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input type="tel" id="reg-phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-specialization">Area of Specialization</label>
+                        <select id="reg-specialization" class="form-control" required>
+                            <option value="">Select Specialization</option>
+                            <option value="math">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="english">English/Language Arts</option>
+                            <option value="social">Social Studies</option>
+                            <option value="career">Career Guidance</option>
+                            <option value="general">General Academics</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-qualification">Highest Qualification</label>
+                        <input type="text" id="reg-qualification" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-experience">Years of Mentoring Experience</label>
+                        <input type="number" id="reg-experience" class="form-control" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-bio">Professional Bio</label>
+                        <textarea id="reg-bio" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-approach">Mentoring Approach</label>
+                        <textarea id="reg-approach" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm-password">Confirm Password</label>
+                        <input type="password" id="reg-confirm-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Apply as Mentor</button>
+                    </div>
+                    <p style="text-align: center;">Already have an account? <a href="#" onclick="switchAuthTab('login')">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mentee Detail Modal -->
+    <div id="mentee-detail-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="margin: 0;">Mentee Profile</h2>
+                <button class="close-modal" onclick="closeMenteeDetailModal()">&times;</button>
+            </div>
+            <div id="mentee-detail-content">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Gramik Digital Pathshala. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+</html>

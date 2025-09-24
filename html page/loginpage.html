@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramik Digital Pathshala - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css page/login-styles.css">
+    <link rel="javascript" href="/script/login.js">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <link rel="icon" type="image/png" href="icon.png" />
+
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="left-panel">
+            <h1>Welcome Back!</h1>
+            <p>Sign in to continue your learning journey, access your courses, and connect with your community.</p>
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> Resume your learning progress</li>
+                <li><i class="fas fa-check-circle"></i> Access your personalized dashboard</li>
+                <li><i class="fas fa-check-circle"></i> Connect with your mentors and peers</li>
+                <li><i class="fas fa-check-circle"></i> Track your achievements</li>
+            </ul>
+        </div>
+
+        <div class="right-panel">
+            <div class="logo">
+                <img src="icon.png" alt="Gramik Pathshala" />
+                <h2>Gramik<span>Digital Pathshala</span></h2>
+                <p>Sign in to your account</p>
+            </div>
+
+            <div id="message-container"></div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="email">Email</div>
+                <div class="tab" data-tab="phone">Phone</div>
+                <div class="tab" data-tab="google">Google</div>
+            </div>
+
+            <!-- Email Login Form -->
+            <div class="tab-content active" id="email-tab">
+                <form id="email-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-toggle">
+                            <input type="password" id="password" name="password" required>
+                            <i class="fas fa-eye" id="toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#" id="forgot-password-link">Forgot your password?</a>
+                    </div>
+
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+
+                <div class="reset-section" id="reset-password-section">
+                    <h3>Reset Your Password</h3>
+                    <p>Enter your email address and we'll send you a link to reset your password.</p>
+
+                    <div class="form-group">
+                        <label for="reset-email">Email Address</label>
+                        <input type="email" id="reset-email" name="reset-email" required>
+                    </div>
+
+                    <button type="button" class="btn" id="send-reset-link">Send Reset Link</button>
+                    <div class="back-to-login">
+                        <a href="#" id="back-to-login">Back to login</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone Login Form -->
+            <div class="tab-content" id="phone-tab">
+                <form id="phone-form">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="phone-input">
+                            <select id="country-code" name="country-code">
+                                <option value="+91" selected>+91 (IN)</option>
+                            </select>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Send Verification Code</button>
+
+                    <div class="verification-section" id="phone-verification">
+                        <div class="form-group">
+                            <label for="verification-code">Verification Code</label>
+                            <input type="text" id="verification-code" name="verification-code" required>
+                        </div>
+                        <button type="button" class="btn" id="verify-phone-btn">Verify Code</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Google Login -->
+            <div class="tab-content" id="google-tab">
+                <div class="oauth-buttons">
+                    <button type="button" class="oauth-btn google-btn" id="google-login-btn">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </div>
+
+                <p style="text-align: center; margin-top: 20px; color: #777;">
+                    You will be redirected to Google to complete your authentication.
+                </p>
+            </div>
+
+            <div class="register-link">
+                Don't have an account? <a href="regitrationpage.html">Register now</a>
+            </div>
+        </div>
+    </div>
+
+   
+</body>
+
+</html>
