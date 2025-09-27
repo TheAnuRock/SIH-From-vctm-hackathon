@@ -15,15 +15,12 @@ Team Name: RDE
 
 Team Members:
 
-[Member 1 Name] - [Role/Contribution]
-
-[Member 2 Name] - [Role/Contribution]
-
-[Member 3 Name] - [Role/Contribution]
-
-[Member 4 Name] - [Role/Contribution]
-
-[Member 5 Name] - [Role/Contribution]
+Sweta - 
+Sumit Kumar - [Role/Contribution]
+Anurudhd Kumar - Full stack web developer
+Raj kumar - [Role/Contribution]
+Sony gupta - [Role/Contribution]
+Sazia bano - [Role/Contribution]
 
 ✨ Features
 [Feature 1]
