@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Language Learning & Detection</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #4cc9f0;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --success: #4bb543;
+        --warning: #ffcc00;
+        --danger: #dc3545;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+        color: white;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        padding: 20px 0;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 5px;
+        backdrop-filter: blur(10px);
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s;
+        font-weight: bold;
+      }
+
+      .tab.active {
+        background: var(--primary);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .main-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+      }
+
+      .section {
+        flex: 1;
+        min-width: 300px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      }
+
+      .camera-container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        background: #000;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+
+      #video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .camera-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+      }
+
+      .detection-frame {
+        width: 200px;
+        height: 200px;
+        border: 3px dashed var(--accent);
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--accent);
+        font-weight: bold;
+        background: rgba(76, 201, 240, 0.1);
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background: var(--primary);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      button:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+      }
+
+      button:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .detection-result {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 20px;
+        min-height: 100px;
+      }
+
+      .result-text {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .confidence {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .confidence-bar {
+        flex: 1;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        margin-left: 10px;
+        overflow: hidden;
+      }
+
+      .confidence-fill {
+        height: 100%;
+        background: var(--success);
+        width: 0%;
+        transition: width 0.5s;
+      }
+
+      .topic-selector {
+        margin-bottom: 20px;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 1rem;
+      }
+
+      .sign-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 0;
+      }
+
+      .sign-image {
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .sign-image img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 10px;
+      }
+
+      .hand-diagram {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hand {
+        position: relative;
+        width: 120px;
+        height: 150px;
+      }
+
+      .palm {
+        width: 80px;
+        height: 100px;
+        background: #ffdbac;
+        border-radius: 40% 40% 20% 20%;
+        position: absolute;
+        top: 50px;
+        left: 20px;
+      }
+
+      .thumb,
+      .finger {
+        position: absolute;
+        background: #ffdbac;
+        border-radius: 20px;
+      }
+
+      .thumb {
+        width: 30px;
+        height: 40px;
+        transform: rotate(-45deg);
+        top: 30px;
+        left: 0;
+      }
+
+      .index {
+        width: 20px;
+        height: 60px;
+        top: 0;
+        left: 45px;
+      }
+
+      .middle {
+        width: 20px;
+        height: 70px;
+        top: 0;
+        left: 65px;
+      }
+
+      .ring {
+        width: 20px;
+        height: 65px;
+        top: 5px;
+        left: 85px;
+      }
+
+      .pinky {
+        width: 15px;
+        height: 50px;
+        top: 15px;
+        left: 105px;
+      }
+
+      .sign-description {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .sign-instruction {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 10px;
+      }
+
+      .instruction-steps {
+        margin-top: 10px;
+        padding-left: 20px;
+      }
+
+      .instruction-steps li {
+        margin-bottom: 8px;
+      }
+
+      .progress-section {
+        margin-top: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      }
+
+      .progress-bar {
+        height: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        margin: 15px 0;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: var(--success);
+        width: 30%;
+        border-radius: 10px;
+        transition: width 0.5s;
+      }
+
+      .achievements {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+      }
+
+      .achievement {
+        text-align: center;
+      }
+
+      .achievement-icon {
+        font-size: 2rem;
+        margin-bottom: 5px;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        opacity: 0.8;
+      }
+
+      .api-note {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-size: 0.9rem;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .preview-image {
+        max-width: 100%;
+        max-height: 200px;
+        margin-top: 10px;
+        border-radius: 5px;
+        display: none;
+      }
+
+      .custom-signs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .custom-sign-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        position: relative;
+      }
+
+      .custom-sign-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+
+      .sign-category-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--accent);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: bold;
+      }
+
+      .delete-sign {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(220, 53, 69, 0.8);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 30px;
+        opacity: 0.7;
+        grid-column: 1 / -1;
+      }
+
+      .storage-info {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        font-size: 0.8rem;
+        text-align: center;
+      }
+
+      .import-export {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .import-export button {
+        flex: 1;
+      }
+
+      .category-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .category-filter {
+        padding: 8px 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+      }
+
+      .category-filter.active {
+        background: var(--primary);
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          flex-direction: column;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .custom-signs-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .import-export {
+          flex-direction: column;
+        }
+
+        .category-filters {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Sign Language Learning & Detection</h1>
+        <p class="subtitle">
+          Practice sign language with real-time feedback and create your own
+          custom signs
+        </p>
+      </header>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="learn">Learn & Detect</div>
+        <div class="tab" data-tab="create">Create Custom Signs</div>
+        <div class="tab" data-tab="my-signs">My Signs</div>
+      </div>
+
+      <!-- Learn & Detect Tab -->
+      <div class="tab-content active" id="learn-tab">
+        <div class="main-content">
+          <section class="section">
+            <h2>Sign Detection</h2>
+            <div class="camera-container">
+              <video id="video" autoplay playsinline></video>
+              <div class="camera-overlay">
+                <div class="detection-frame">Position your hand here</div>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button id="startCamera">
+                <i class="fas fa-camera"></i> Start Camera
+              </button>
+              <button id="detectSign" disabled>
+                <i class="fas fa-search"></i> Detect Sign
+              </button>
+            </div>
+
+            <div class="detection-result">
+              <div class="result-text">Detection results will appear here</div>
+              <div class="confidence">
+                Confidence:
+                <div class="confidence-bar">
+                  <div class="confidence-fill" id="confidenceFill"></div>
+                </div>
+                <span id="confidenceValue">0%</span>
+              </div>
+            </div>
+
+            <div class="api-note">
+              <strong>API Integration Note:</strong> In a production
+              environment, the detection would connect to the Gemini API. For
+              security, API calls should be made through a backend server.
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Learn Signs</h2>
+            <div class="topic-selector">
+              <select id="topicSelect">
+                <option value="alphabet">Alphabet (A-Z)</option>
+                <option value="numbers">Numbers (0-9)</option>
+                <option value="greetings">Greetings</option>
+                <option value="questions">Common Questions</option>
+                <option value="other">Other Signs</option>
+                <option value="custom">My Custom Signs</option>
+              </select>
+            </div>
+
+            <div class="sign-display">
+              <div class="sign-image">
+                <div class="hand-diagram" id="handDiagram">
+                  <!-- Hand diagram will be generated by JavaScript -->
+                </div>
+              </div>
+              <div class="sign-description">
+                <h3 id="signName">Letter A</h3>
+                <p id="signDescription">
+                  Make a fist with your thumb placed on the side of your hand.
+                </p>
+              </div>
+            </div>
+
+            <div class="sign-instruction">
+              <h4>How to make this sign:</h4>
+              <p id="signInstructions">
+                Hold your hand up with your palm facing forward. Close your
+                fingers into a fist, but extend your thumb to the side.
+              </p>
+              <ol class="instruction-steps" id="instructionSteps">
+                <!-- Steps will be populated by JavaScript -->
+              </ol>
+            </div>
+
+            <div class="controls">
+              <button id="prevSign">
+                <i class="fas fa-arrow-left"></i> Previous
+              </button>
+              <button id="nextSign">
+                Next <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <section class="progress-section">
+          <h2>Your Progress</h2>
+          <p>
+            You've learned <span id="learnedCount">5</span> out of
+            <span id="totalCount">26</span> letters in the alphabet
+          </p>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="achievements">
+            <div class="achievement">
+              <div class="achievement-icon">🏆</div>
+              <div>Signs Mastered</div>
+              <div id="masteredCount">12</div>
+            </div>
+            <div class="achievement">
+              <div class="achievement-icon">⭐</div>
+              <div>Current Streak</div>
+              <div id="streakCount">5 days</div>
+            </div>
+            <div class="achievement">
+              <div class="achievement-icon">🎯</div>
+              <div>Accuracy</div>
+              <div id="accuracyRate">78%</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Create Custom Signs Tab -->
+      <div class="tab-content" id="create-tab">
+        <section class="section">
+          <h2>Create Your Own Sign</h2>
+          <p>
+            Add your own custom sign language gestures to the learning platform.
+            All data is stored locally in your browser.
+          </p>
+
+          <form id="customSignForm">
+            <div class="form-group">
+              <label for="signCategory">Category</label>
+              <select id="signCategory" required>
+                <option value="">Select a category</option>
+                <option value="alphabet">Alphabet</option>
+                <option value="numbers">Numbers</option>
+                <option value="greetings">Greetings</option>
+                <option value="questions">Common Questions</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="signNameInput">Sign Name</label>
+              <input
+                type="text"
+                id="signNameInput"
+                placeholder="e.g., 'I love you'"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="signDescriptionInput">Description</label>
+              <textarea
+                id="signDescriptionInput"
+                placeholder="Describe what this sign means"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="signInstructionsInput">How to make the sign</label>
+              <textarea
+                id="signInstructionsInput"
+                placeholder="Step-by-step instructions for making this sign"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="signImageInput">Upload Photo of the Sign</label>
+              <input
+                type="file"
+                id="signImageInput"
+                accept="image/*"
+                required
+              />
+              <img
+                id="imagePreview"
+                class="preview-image"
+                alt="Image preview"
+              />
+            </div>
+
+            <div class="controls">
+              <button type="button" id="previewSign">
+                <i class="fas fa-eye"></i> Preview
+              </button>
+              <button type="submit" id="saveSign">
+                <i class="fas fa-save"></i> Save Sign
+              </button>
+            </div>
+          </form>
+
+          <div class="storage-info">
+            <i class="fas fa-info-circle"></i> Your signs are stored locally in
+            your browser. They will remain available even if you close this
+            page.
+          </div>
+        </section>
+      </div>
+
+      <!-- My Signs Tab -->
+      <div class="tab-content" id="my-signs-tab">
+        <section class="section">
+          <h2>My Custom Signs</h2>
+          <p>
+            Here are all the signs you've created. You can export them to a file
+            or import signs from a previous session.
+          </p>
+
+          <div class="import-export">
+            <button id="exportSigns">
+              <i class="fas fa-download"></i> Export Signs
+            </button>
+            <button id="importSigns">
+              <i class="fas fa-upload"></i> Import Signs
+            </button>
+            <input
+              type="file"
+              id="importFile"
+              accept=".json"
+              style="display: none"
+            />
+          </div>
+
+          <div class="category-filters" id="categoryFilters">
+            <div class="category-filter active" data-category="all">
+              All Signs
+            </div>
+            <div class="category-filter" data-category="alphabet">Alphabet</div>
+            <div class="category-filter" data-category="numbers">Numbers</div>
+            <div class="category-filter" data-category="greetings">
+              Greetings
+            </div>
+            <div class="category-filter" data-category="questions">
+              Questions
+            </div>
+            <div class="category-filter" data-category="other">Other</div>
+          </div>
+
+          <div class="custom-signs-grid" id="customSignsGrid">
+            <div class="empty-state" id="emptyState">
+              <i
+                class="fas fa-inbox"
+                style="font-size: 3rem; margin-bottom: 15px"
+              ></i>
+              <p>You haven't created any custom signs yet.</p>
+              <p>Go to the "Create Custom Signs" tab to add your first sign!</p>
+            </div>
+          </div>
+
+          <div class="storage-info">
+            <i class="fas fa-database"></i> Storage used:
+            <span id="storageUsed">0 KB</span> | Signs count:
+            <span id="signsCount">0</span>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        <p>Sign Language Learning Platform | Local Storage for Custom Signs</p>
+      </footer>
+    </div>
+
+    <script>
+      // DOM Elements
+      const video = document.getElementById("video");
+      const startCameraBtn = document.getElementById("startCamera");
+      const detectSignBtn = document.getElementById("detectSign");
+      const confidenceFill = document.getElementById("confidenceFill");
+      const confidenceValue = document.getElementById("confidenceValue");
+      const resultText = document.querySelector(".result-text");
+      const topicSelect = document.getElementById("topicSelect");
+      const handDiagram = document.getElementById("handDiagram");
+      const signName = document.getElementById("signName");
+      const signDescription = document.getElementById("signDescription");
+      const signInstructions = document.getElementById("signInstructions");
+      const instructionSteps = document.getElementById("instructionSteps");
+      const prevSignBtn = document.getElementById("prevSign");
+      const nextSignBtn = document.getElementById("nextSign");
+      const progressFill = document.getElementById("progressFill");
+      const learnedCount = document.getElementById("learnedCount");
+      const totalCount = document.getElementById("totalCount");
+      const masteredCount = document.getElementById("masteredCount");
+      const streakCount = document.getElementById("streakCount");
+      const accuracyRate = document.getElementById("accuracyRate");
+
+      // Custom signs elements
+      const customSignForm = document.getElementById("customSignForm");
+      const signCategoryInput = document.getElementById("signCategory");
+      const signNameInput = document.getElementById("signNameInput");
+      const signDescriptionInput = document.getElementById(
+        "signDescriptionInput"
+      );
+      const signInstructionsInput = document.getElementById(
+        "signInstructionsInput"
+      );
+      const signImageInput = document.getElementById("signImageInput");
+      const imagePreview = document.getElementById("imagePreview");
+      const customSignsGrid = document.getElementById("customSignsGrid");
+      const emptyState = document.getElementById("emptyState");
+      const exportSignsBtn = document.getElementById("exportSigns");
+      const importSignsBtn = document.getElementById("importSigns");
+      const importFileInput = document.getElementById("importFile");
+      const storageUsed = document.getElementById("storageUsed");
+      const signsCount = document.getElementById("signsCount");
+      const categoryFilters = document.getElementById("categoryFilters");
+
+      // Tab functionality
+      const tabs = document.querySelectorAll(".tab");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const tabId = tab.getAttribute("data-tab");
+
+          // Update active tab
+          tabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          // Show corresponding content
+          tabContents.forEach((content) => content.classList.remove("active"));
+          document.getElementById(`${tabId}-tab`).classList.add("active");
+
+          // Load custom signs when My Signs tab is opened
+          if (tabId === "my-signs") {
+            loadCustomSigns();
+            updateStorageInfo();
+          }
+        });
+      });
+
+      // Learning content with detailed hand positions
+      const learningContent = {
+        alphabet: [
+          {
+            sign: "A",
+            name: "Letter A",
+            description: "The first letter of the alphabet",
+            instructions:
+              "Make a fist with your thumb placed on the side of your hand.",
+            steps: [
+              "Start with your hand open, palm facing forward",
+              "Curl your fingers into a fist",
+              "Place your thumb against the side of your index finger",
+            ],
+            handPosition: {
+              thumb: { bent: true, position: "side" },
+              index: { bent: true, position: "fist" },
+              middle: { bent: true, position: "fist" },
+              ring: { bent: true, position: "fist" },
+              pinky: { bent: true, position: "fist" },
+            },
+          },
+          {
+            sign: "B",
+            name: "Letter B",
+            description: "The second letter of the alphabet",
+            instructions:
+              "Hold your hand up, palm facing out, with fingers together and thumb tucked in.",
+            steps: [
+              "Start with your hand open, palm facing forward",
+              "Keep your fingers straight and together",
+              "Tuck your thumb into your palm",
+            ],
+            handPosition: {
+              thumb: { bent: true, position: "tucked" },
+              index: { bent: false, position: "straight" },
+              middle: { bent: false, position: "straight" },
+              ring: { bent: false, position: "straight" },
+              pinky: { bent: false, position: "straight" },
+            },
+          },
+        ],
+        numbers: [
+          {
+            sign: "1",
+            name: "Number 1",
+            description: "The number one",
+            instructions: "Hold up your index finger.",
+            steps: [
+              "Start with your hand in a fist",
+              "Extend your index finger upward",
+              "Keep your other fingers curled",
+            ],
+            handPosition: {
+              thumb: { bent: true, position: "side" },
+              index: { bent: false, position: "pointing" },
+              middle: { bent: true, position: "fist" },
+              ring: { bent: true, position: "fist" },
+              pinky: { bent: true, position: "fist" },
+            },
+          },
+        ],
+        greetings: [
+          {
+            sign: "Hello",
+            name: "Hello",
+            description: "A common greeting",
+            instructions: "Wave your hand from side to side.",
+            steps: [
+              "Start with your hand open, palm facing forward",
+              "Move your hand from side to side in a waving motion",
+              "Keep your fingers together",
+            ],
+            handPosition: {
+              thumb: { bent: false, position: "extended" },
+              index: { bent: false, position: "straight" },
+              middle: { bent: false, position: "straight" },
+              ring: { bent: false, position: "straight" },
+              pinky: { bent: false, position: "straight" },
+            },
+          },
+        ],
+        questions: [
+          {
+            sign: "What",
+            name: "What",
+            description: "Asking for information",
+            instructions:
+              "Hold both hands up with palms facing up and shrug your shoulders slightly.",
+            steps: [
+              "Hold both hands open, palms facing up",
+              "Move your hands outward slightly",
+              "Shrug your shoulders as you make the sign",
+            ],
+            handPosition: {
+              thumb: { bent: false, position: "extended" },
+              index: { bent: false, position: "straight" },
+              middle: { bent: false, position: "straight" },
+              ring: { bent: false, position: "straight" },
+              pinky: { bent: false, position: "straight" },
+            },
+          },
+        ],
+        other: [
+          {
+            sign: "❤️",
+            name: "I Love You",
+            description: "A combination of the letters I, L, and Y",
+            instructions:
+              "Raise your hand with the thumb, index finger, and pinky finger extended.",
+            steps: [
+              "Extend your thumb, index finger, and pinky finger",
+              "Keep your middle and ring fingers folded down",
+              "Palm should face forward",
+            ],
+            handPosition: {
+              thumb: { bent: false, position: "extended" },
+              index: { bent: false, position: "straight" },
+              middle: { bent: true, position: "fist" },
+              ring: { bent: true, position: "fist" },
+              pinky: { bent: false, position: "straight" },
+            },
+          },
+        ],
+        custom: [], // Will be populated with custom signs from localStorage
+      };
+
+      let currentTopic = "alphabet";
+      let currentSignIndex = 0;
+      let stream = null;
+      let customSigns = [];
+      let currentFilter = "all";
+
+      // Function to create hand diagram based on sign position
+      function createHandDiagram(handPosition) {
+        handDiagram.innerHTML = "";
+
+        const hand = document.createElement("div");
+        hand.className = "hand";
+
+        // Create palm
+        const palm = document.createElement("div");
+        palm.className = "palm";
+        hand.appendChild(palm);
+
+        // Create thumb
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+        if (handPosition && handPosition.thumb.bent) {
+          thumb.style.transform = "rotate(-45deg)";
+        }
+        hand.appendChild(thumb);
+
+        // Create fingers
+        const index = document.createElement("div");
+        index.className = "finger index";
+        if (handPosition && handPosition.index.bent) {
+          index.style.height = "40px";
+          index.style.top = "20px";
+        }
+        hand.appendChild(index);
+
+        const middle = document.createElement("div");
+        middle.className = "finger middle";
+        if (handPosition && handPosition.middle.bent) {
+          middle.style.height = "50px";
+          middle.style.top = "10px";
+        }
+        hand.appendChild(middle);
+
+        const ring = document.createElement("div");
+        ring.className = "finger ring";
+        if (handPosition && handPosition.ring.bent) {
+          ring.style.height = "45px";
+          ring.style.top = "15px";
+        }
+        hand.appendChild(ring);
+
+        const pinky = document.createElement("div");
+        pinky.className = "finger pinky";
+        if (handPosition && handPosition.pinky.bent) {
+          pinky.style.height = "35px";
+          pinky.style.top = "25px";
+        }
+        hand.appendChild(pinky);
+
+        handDiagram.appendChild(hand);
+      }
+
+      // Initialize the learning section
+      function initializeLearning() {
+        updateSignDisplay();
+
+        // Event listeners for navigation
+        prevSignBtn.addEventListener("click", () => {
+          if (currentSignIndex > 0) {
+            currentSignIndex--;
+            updateSignDisplay();
+          }
+        });
+
+        nextSignBtn.addEventListener("click", () => {
+          const signs = learningContent[currentTopic];
+          if (currentSignIndex < signs.length - 1) {
+            currentSignIndex++;
+            updateSignDisplay();
+          }
+        });
+
+        // Event listener for topic change
+        topicSelect.addEventListener("change", (e) => {
+          currentTopic = e.target.value;
+          currentSignIndex = 0;
+
+          // Load custom signs if that topic is selected
+          if (currentTopic === "custom") {
+            loadCustomSignsForLearning();
+          } else {
+            updateSignDisplay();
+          }
+        });
+      }
+
+      // Update the sign display based on current topic and index
+      function updateSignDisplay() {
+        const signs = learningContent[currentTopic];
+        if (signs.length === 0) {
+          signName.textContent = "No signs available";
+          signDescription.textContent =
+            "There are no signs in this category yet.";
+          signInstructions.textContent = "";
+          instructionSteps.innerHTML = "";
+          handDiagram.innerHTML = "<p>No diagram available</p>";
+          return;
+        }
+
+        const currentSign = signs[currentSignIndex];
+
+        // Update sign information
+        signName.textContent = currentSign.name;
+        signDescription.textContent = currentSign.description;
+        signInstructions.textContent = currentSign.instructions;
+
+        // Update hand diagram or image
+        if (currentSign.imageUrl) {
+          // Custom sign with image
+          handDiagram.innerHTML = `<img src="${currentSign.imageUrl}" alt="${currentSign.name}">`;
+        } else {
+          // Standard sign with hand diagram
+          createHandDiagram(currentSign.handPosition);
+        }
+
+        // Update instruction steps
+        instructionSteps.innerHTML = "";
+        if (currentSign.steps) {
+          currentSign.steps.forEach((step) => {
+            const li = document.createElement("li");
+            li.textContent = step;
+            instructionSteps.appendChild(li);
+          });
+        }
+
+        // Update navigation buttons
+        prevSignBtn.disabled = currentSignIndex === 0;
+        nextSignBtn.disabled = currentSignIndex === signs.length - 1;
+
+        // Update progress counts
+        learnedCount.textContent = currentSignIndex + 1;
+        totalCount.textContent = signs.length;
+      }
+
+      // Initialize camera functionality
+      function initializeCamera() {
+        startCameraBtn.addEventListener("click", async () => {
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: "user" },
+            });
+            video.srcObject = stream;
+            detectSignBtn.disabled = false;
+            startCameraBtn.disabled = true;
+            startCameraBtn.innerHTML =
+              '<i class="fas fa-camera"></i> Camera Active';
+            resultText.textContent =
+              'Camera started. Position your hand in the frame and click "Detect Sign".';
+          } catch (err) {
+            console.error("Error accessing camera: ", err);
+            resultText.textContent =
+              "Error accessing camera. Please make sure you have granted camera permissions.";
+          }
+        });
+
+        detectSignBtn.addEventListener("click", async () => {
+          if (!stream) {
+            resultText.textContent = "Please start the camera first.";
+            return;
+          }
+
+          // Simulate detection process
+          simulateDetection();
+        });
+      }
+
+      // Simulate sign detection
+      function simulateDetection() {
+        resultText.textContent = "Analyzing sign...";
+        confidenceFill.style.width = "0%";
+        confidenceValue.textContent = "0%";
+
+        // Show loading animation
+        let dots = 0;
+        const loadingInterval = setInterval(() => {
+          dots = (dots + 1) % 4;
+          resultText.textContent = "Analyzing sign" + ".".repeat(dots);
+        }, 500);
+
+        // Simulate API call delay
+        setTimeout(() => {
+          clearInterval(loadingInterval);
+
+          const signs = learningContent[currentTopic];
+          if (signs.length === 0) {
+            resultText.textContent =
+              "No signs available for detection in this category.";
+            return;
+          }
+
+          const currentSign = signs[currentSignIndex];
+
+          // Simulate random results
+          const isCorrect = Math.random() > 0.3;
+          const confidence = Math.floor(Math.random() * 30) + 70;
+
+          if (isCorrect) {
+            resultText.textContent = `✓ Correct! Detected: ${currentSign.name}`;
+            resultText.style.color = "var(--success)";
+
+            // Update mastery count if confidence is high
+            if (confidence > 85) {
+              const currentMastered = parseInt(masteredCount.textContent);
+              masteredCount.textContent = currentMastered + 1;
+            }
+          } else {
+            // Pick a random incorrect sign
+            const incorrectIndex =
+              signs.length > 1 ? (currentSignIndex + 1) % signs.length : 0;
+            const incorrectSign = signs[incorrectIndex];
+            resultText.textContent = `✗ Incorrect. Detected: ${incorrectSign.name} (Try again!)`;
+            resultText.style.color = "var(--danger)";
+          }
+
+          confidenceFill.style.width = `${confidence}%`;
+          confidenceValue.textContent = `${confidence}%`;
+
+          // Update progress
+          const progress = Math.min(
+            100,
+            ((currentSignIndex + 1) / signs.length) * 100
+          );
+          progressFill.style.width = `${progress}%`;
+
+          // Update accuracy
+          const currentAccuracy = parseInt(accuracyRate.textContent);
+          const newAccuracy = isCorrect
+            ? Math.min(100, currentAccuracy + 2)
+            : Math.max(0, currentAccuracy - 5);
+          accuracyRate.textContent = `${newAccuracy}%`;
+        }, 2000);
+      }
+
+      // Custom signs functionality with Local Storage
+      function initializeCustomSigns() {
+        // Image preview
+        signImageInput.addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              imagePreview.src = e.target.result;
+              imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // Form submission
+        customSignForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const category = signCategoryInput.value;
+          const name = signNameInput.value;
+          const description = signDescriptionInput.value;
+          const instructions = signInstructionsInput.value;
+          const imageFile = signImageInput.files[0];
+
+          if (!category) {
+            alert("Please select a category for the sign.");
+            return;
+          }
+
+          if (!imageFile) {
+            alert("Please select an image for the sign.");
+            return;
+          }
+
+          // Disable form while saving
+          const saveButton = document.getElementById("saveSign");
+          saveButton.disabled = true;
+          saveButton.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+          try {
+            // Convert image to base64 for storage
+            const imageUrl = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(imageFile);
+            });
+
+            // Create sign object
+            const sign = {
+              id: Date.now().toString(),
+              category,
+              name,
+              description,
+              instructions,
+              imageUrl,
+              createdAt: new Date().toISOString(),
+            };
+
+            // Save to localStorage
+            saveSignToStorage(sign);
+
+            // Reset form
+            customSignForm.reset();
+            imagePreview.style.display = "none";
+
+            alert("Sign saved successfully!");
+
+            // Reload custom signs if on that tab
+            if (
+              document
+                .getElementById("my-signs-tab")
+                .classList.contains("active")
+            ) {
+              loadCustomSigns();
+              updateStorageInfo();
+            }
+          } catch (error) {
+            console.error("Error saving sign: ", error);
+            alert("Error saving sign. Please try again.");
+          } finally {
+            saveButton.disabled = false;
+            saveButton.innerHTML = '<i class="fas fa-save"></i> Save Sign';
+          }
+        });
+
+        // Export functionality
+        exportSignsBtn.addEventListener("click", exportSigns);
+
+        // Import functionality
+        importSignsBtn.addEventListener("click", () => {
+          importFileInput.click();
+        });
+
+        importFileInput.addEventListener("change", importSigns);
+
+        // Category filter functionality
+        const filterButtons =
+          categoryFilters.querySelectorAll(".category-filter");
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Update active filter
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+
+            currentFilter = this.getAttribute("data-category");
+            loadCustomSigns();
+          });
+        });
+      }
+
+      // Save sign to localStorage
+      function saveSignToStorage(sign) {
+        const existingSigns = JSON.parse(
+          localStorage.getItem("customSigns") || "[]"
+        );
+        existingSigns.push(sign);
+        localStorage.setItem("customSigns", JSON.stringify(existingSigns));
+      }
+
+      // Load custom signs from localStorage
+      function loadCustomSignsFromStorage() {
+        return JSON.parse(localStorage.getItem("customSigns") || "[]");
+      }
+
+      // Delete sign from localStorage
+      function deleteSignFromStorage(signId) {
+        const existingSigns = loadCustomSignsFromStorage();
+        const updatedSigns = existingSigns.filter((sign) => sign.id !== signId);
+        localStorage.setItem("customSigns", JSON.stringify(updatedSigns));
+      }
+
+      // Load custom signs for the "My Signs" tab
+      function loadCustomSigns() {
+        customSigns = loadCustomSignsFromStorage();
+
+        // Filter signs by category if needed
+        let filteredSigns = customSigns;
+        if (currentFilter !== "all") {
+          filteredSigns = customSigns.filter(
+            (sign) => sign.category === currentFilter
+          );
+        }
+
+        // Update UI
+        if (filteredSigns.length === 0) {
+          emptyState.style.display = "block";
+          customSignsGrid.innerHTML = "";
+
+          if (currentFilter !== "all") {
+            emptyState.innerHTML = `
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>No signs found in the ${currentFilter} category.</p>
+                        <p>Go to the "Create Custom Signs" tab to add signs to this category!</p>
+                    `;
+          }
+        } else {
+          emptyState.style.display = "none";
+          customSignsGrid.innerHTML = "";
+
+          filteredSigns.forEach((sign) => {
+            const card = document.createElement("div");
+            card.className = "custom-sign-card";
+            card.innerHTML = `
+                        <div class="sign-category-badge">${getCategoryDisplayName(
+                          sign.category
+                        )}</div>
+                        <img src="${sign.imageUrl}" alt="${sign.name}">
+                        <h3>${sign.name}</h3>
+                        <p>${sign.description}</p>
+                        <button class="delete-sign" data-id="${sign.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+            customSignsGrid.appendChild(card);
+          });
+
+          // Add event listeners to delete buttons
+          document.querySelectorAll(".delete-sign").forEach((button) => {
+            button.addEventListener("click", function () {
+              const signId = this.getAttribute("data-id");
+              deleteSign(signId);
+            });
+          });
+        }
+      }
+
+      // Get display name for category
+      function getCategoryDisplayName(category) {
+        const categoryMap = {
+          alphabet: "Alphabet",
+          numbers: "Numbers",
+          greetings: "Greetings",
+          questions: "Questions",
+          other: "Other",
+        };
+        return categoryMap[category] || category;
+      }
+
+      // Load custom signs for the learning section
+      function loadCustomSignsForLearning() {
+        learningContent.custom = loadCustomSignsFromStorage();
+        currentSignIndex = 0;
+        updateSignDisplay();
+      }
+
+      // Delete a custom sign
+      function deleteSign(signId) {
+        if (!confirm("Are you sure you want to delete this sign?")) {
+          return;
+        }
+
+        try {
+          // Delete from storage
+          deleteSignFromStorage(signId);
+
+          // Reload the signs
+          loadCustomSigns();
+          updateStorageInfo();
+
+          // Also update the learning section if needed
+          if (currentTopic === "custom") {
+            loadCustomSignsForLearning();
+          }
+        } catch (error) {
+          console.error("Error deleting sign: ", error);
+          alert("Error deleting sign. Please try again.");
+        }
+      }
+
+      // Export signs to JSON file
+      function exportSigns() {
+        const signs = loadCustomSignsFromStorage();
+        if (signs.length === 0) {
+          alert("No signs to export.");
+          return;
+        }
+
+        const dataStr = JSON.stringify(signs, null, 2);
+        const dataBlob = new Blob([dataStr], { type: "application/json" });
+
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "my-sign-language-signs.json";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        alert(`Exported ${signs.length} signs successfully!`);
+      }
+
+      // Import signs from JSON file
+      function importSigns(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const importedSigns = JSON.parse(e.target.result);
+
+            if (!Array.isArray(importedSigns)) {
+              throw new Error("Invalid file format");
+            }
+
+            // Validate each sign
+            for (let sign of importedSigns) {
+              if (
+                !sign.name ||
+                !sign.description ||
+                !sign.imageUrl ||
+                !sign.category
+              ) {
+                throw new Error("Invalid sign data in file");
+              }
+            }
+
+            // Merge with existing signs
+            const existingSigns = loadCustomSignsFromStorage();
+            const mergedSigns = [...existingSigns, ...importedSigns];
+
+            // Remove duplicates based on ID
+            const uniqueSigns = mergedSigns.filter(
+              (sign, index, self) =>
+                index === self.findIndex((s) => s.id === sign.id)
+            );
+
+            // Save to storage
+            localStorage.setItem("customSigns", JSON.stringify(uniqueSigns));
+
+            // Reload UI
+            loadCustomSigns();
+            updateStorageInfo();
+
+            if (currentTopic === "custom") {
+              loadCustomSignsForLearning();
+            }
+
+            alert(`Imported ${importedSigns.length} signs successfully!`);
+          } catch (error) {
+            console.error("Error importing signs: ", error);
+            alert("Error importing signs. Please check the file format.");
+          }
+        };
+        reader.readAsText(file);
+
+        // Reset file input
+        event.target.value = "";
+      }
+
+      // Update storage information
+      function updateStorageInfo() {
+        const signs = loadCustomSignsFromStorage();
+        signsCount.textContent = signs.length;
+
+        // Calculate approximate storage size
+        const data = JSON.stringify(signs);
+        const sizeInKB = (new Blob([data]).size / 1024).toFixed(2);
+        storageUsed.textContent = `${sizeInKB} KB`;
+      }
+
+      // Initialize the application
+      function init() {
+        initializeLearning();
+        initializeCamera();
+        initializeCustomSigns();
+        updateStorageInfo();
+
+        // Set initial progress
+        progressFill.style.width = "30%";
+      }
+
+      // Start the application when the page loads
+      window.addEventListener("load", init);
+
+      // server.js (Backend)
+      const express = require("express");
+      const { GoogleGenerativeAI } = require("@google/generative-ai");
+      const app = express();
+      const port = 3000;
+
+      // Initialize Gemini
+      const genAI = new GoogleGenerativeAI("YOUR_API_KEY_HERE");
+
+      app.use(express.json({ limit: "10mb" }));
+
+      app.post("/detect-sign", async (req, res) => {
+        try {
+          const { imageData } = req.body; // Base64 encoded image
+
+          const model = genAI.getGenerativeModel({
+            model: "gemini-pro-vision",
+          });
+
+          const prompt =
+            "Identify the sign language gesture in this image. Return only the name of the sign.";
+
+          const result = await model.generateContent([
+            prompt,
+            {
+              inlineData: {
+                mimeType: "image/jpeg",
+                data: imageData,
+              },
+            },
+          ]);
+
+          const response = await result.response;
+          const text = response.text();
+
+          res.json({ detectedSign: text, confidence: 0.95 }); // Confidence would need calculation
+        } catch (error) {
+          console.error("Error calling Gemini API:", error);
+          res.status(500).json({ error: "Detection failed" });
+        }
+      });
+
+      app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+      });
+    </script>
+  </body>
+</html>
