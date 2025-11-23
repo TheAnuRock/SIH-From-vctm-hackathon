@@ -12,7 +12,7 @@
     --teacher-color: #1cc88a;
     --mentor-color: #f6c23e;
 }
-
+//new
 * {
     margin: 0;
     padding: 0;
@@ -691,4 +691,5 @@ body {
         font-size: 1.5rem;
         margin: 0 0.4rem;
     }
+
 }
